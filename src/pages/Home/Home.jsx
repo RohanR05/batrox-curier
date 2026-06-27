@@ -6,7 +6,7 @@ const Home = () => {
   const reviewData = fetch("/reviews.json").then((res) => res.json());
 
   return (
-    <div>
+    <div className="mx-2 md:mx-auto">
       <Banner></Banner>
       <Suspense fallback={<p>Loading Reviews</p>}>
         <Review reviewData={reviewData}></Review>

@@ -28,17 +28,17 @@ const ReviewsCard = ({ review }) => {
 
       {/* Rating */}
       <div className="mt-4 flex items-center gap-2">
-        <span className="text-yellow-500 text-lg">⭐</span>
+        <span className="text-primary text-lg">⭐</span>
         <span className="font-semibold">{ratings}/5</span>
       </div>
 
       {/* Review */}
-      <p className="mt-4 font-semibold leading-relaxed">
+      <p className="mt-4 font-semibold text-info  leading-relaxed">
         "{reviewText}"
       </p>
 
       {/* Date */}
-      <div className="mt-5 text-right text-sm text-primary-400">
+      <div className="mt-5 text-right text-sm text-primary">
         {new Date(date).toLocaleDateString()}
       </div>
     </div>
