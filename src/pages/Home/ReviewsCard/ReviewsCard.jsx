@@ -11,7 +11,7 @@ const ReviewsCard = ({ review }) => {
   } = review;
 
   return (
-    <div className="bg-secondary rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300">
+    <div className="bg-primary border-secondary border-4 rounded-2xl shadow-md p-6 hover:shadow-xl transition-all duration-300">
       {/* User Info */}
       <div className="flex items-center gap-4">
         <img
@@ -33,7 +33,7 @@ const ReviewsCard = ({ review }) => {
       </div>
 
       {/* Review */}
-      <p className="mt-4 font-semibold text-info  leading-relaxed">
+      <p className="mt-4 font-semibold text-secondary  leading-relaxed">
         "{reviewText}"
       </p>
 
