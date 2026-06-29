@@ -51,7 +51,7 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <NavLink to={"/login"}>
+          <NavLink to={"/authPage"}>
             <btn className="btn btn-outline text-lg">Login</btn>
           </NavLink>
         </div>
