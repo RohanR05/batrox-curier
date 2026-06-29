@@ -5,8 +5,9 @@ import Register from '../Register/Register'
 const AuthPage = () => {
   return (
     <div>
-      <Login></Login>
+      <h2>Welcome to authintication</h2><Login></Login>
       <Register></Register>
+
     </div>
   )
 }
