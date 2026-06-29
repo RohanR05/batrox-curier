@@ -12,7 +12,7 @@ const Navbar = () => {
         <NavLink to={"/coverage"}>Coverage</NavLink>
       </li>
       <li>
-        <NavLink>dfs</NavLink>
+        <NavLink to={"/login"}>Login</NavLink>
       </li>
     </>
   );
@@ -51,7 +51,9 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <NavLink to={"/login"}>
+            <btn className="btn btn-outline text-lg">Login</btn>
+          </NavLink>
         </div>
       </div>
     </div>
