@@ -15,7 +15,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-primary flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <div className="card w-full max-w-md bg-info shadow-2xl">
         <div className="card-body p-8">
           {/* Header */}
