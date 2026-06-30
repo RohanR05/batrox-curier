@@ -98,14 +98,14 @@ const Register = () => {
           <div className="flex justify-between text-sm">
             <NavLink
               to="/login"
-              className="text-secondary hover:text-primary font-medium"
+              className="text-secondary hover:text-black font-medium"
             >
               Login
             </NavLink>
 
             <NavLink
               to="/"
-              className="text-secondary hover:text-primary font-medium"
+              className="text-secondary hover:text-black font-medium"
             >
               Home
             </NavLink>
