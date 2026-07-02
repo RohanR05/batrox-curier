@@ -1,9 +1,22 @@
 import React from "react";
+import useAuth from "../../../Hooks/useAuth";
 
 const GoogleSignIn = () => {
+  const { googleSignInUser } = useAuth();
+
+  const handleGoogleSignIn = () => {
+    googleSignInUser().then((result) => {
+      console.log(result.user).catch((error) => {
+        console.log(error);
+      });
+    });
+  };
   return (
     <div>
-      <button className="btn bg-secondary text-primary hover:shadow-xl w-full">
+      <button
+        onClick={handleGoogleSignIn}
+        className="btn bg-secondary text-primary hover:shadow-xl w-full"
+      >
         <svg
           aria-label="Google logo"
           width="16"
