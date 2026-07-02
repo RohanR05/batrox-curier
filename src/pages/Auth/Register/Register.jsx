@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router";
 import { FaEnvelope, FaLock, FaUserPlus } from "react-icons/fa";
+import useAuth from "../../../Hooks/useAuth";
 
 const Register = () => {
   const {
@@ -10,8 +11,16 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  const { registerUser } = useAuth();
+
   const handleRegisterForm = (data) => {
-    console.log(data);
+    registerUser(data.email, data.password)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -27,9 +36,7 @@ const Register = () => {
               Create Account
             </h2>
 
-            <p className="text-sm text-gray-500 mt-2">
-              Register to continue
-            </p>
+            <p className="text-sm text-gray-500 mt-2">Register to continue</p>
           </div>
 
           <form
@@ -88,9 +95,7 @@ const Register = () => {
               )}
             </div>
 
-            <button className="btn btn-secondary w-full">
-              Create Account
-            </button>
+            <button className="btn btn-secondary w-full">Create Account</button>
           </form>
 
           <div className="divider">OR</div>
