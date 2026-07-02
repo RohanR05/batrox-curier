@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaLock, FaSignInAlt } from "react-icons/fa";
 import { NavLink } from "react-router";
+import useAuth from "../../../Hooks/useAuth";
 
 const Login = () => {
   const {
@@ -10,8 +11,14 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
+  const { signInUser } = useAuth();
+
   const handleLoginForm = (data) => {
-    console.log(data);
+    signInUser(data.email, data.password).then((result) => {
+      console.log(result).catch((error) => {
+        console.log(error);
+      });
+    });
   };
 
   return (
