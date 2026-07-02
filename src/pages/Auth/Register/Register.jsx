@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { NavLink } from "react-router";
 import { FaEnvelope, FaLock, FaUserPlus } from "react-icons/fa";
 import useAuth from "../../../Hooks/useAuth";
+import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
 
 const Register = () => {
   const {
@@ -99,6 +100,7 @@ const Register = () => {
           </form>
 
           <div className="divider">OR</div>
+          <GoogleSignIn></GoogleSignIn>
 
           <div className="flex justify-between text-sm">
             <NavLink

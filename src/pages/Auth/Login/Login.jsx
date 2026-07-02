@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { FaEnvelope, FaLock, FaSignInAlt } from "react-icons/fa";
 import { NavLink } from "react-router";
 import useAuth from "../../../Hooks/useAuth";
+import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
 
 const Login = () => {
   const {
@@ -109,6 +110,7 @@ const Login = () => {
           </form>
 
           <div className="divider">OR</div>
+          <GoogleSignIn></GoogleSignIn>
 
           <p className="text-center text-sm">
             Don't have an account?{" "}
