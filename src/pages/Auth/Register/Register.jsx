@@ -4,6 +4,7 @@ import { NavLink } from "react-router";
 import { FaEnvelope, FaLock, FaUserPlus } from "react-icons/fa";
 import useAuth from "../../../Hooks/useAuth";
 import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
+import axios from "axios";
 
 const Register = () => {
   const {
@@ -15,9 +16,19 @@ const Register = () => {
   const { registerUser } = useAuth();
 
   const handleRegisterForm = (data) => {
+    const profileImg = data.photo[0];
+
     registerUser(data.email, data.password)
       .then((result) => {
-        console.log(result);
+        console.log(result.user);
+
+        const formData = new FormData();
+        formData.append("image", profileImg);
+        const image_api_url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_apikey}`;
+
+        axios.post(image_api_url, formData).then((res) => {
+          console.log(res.data.data.url);
+        });
       })
       .catch((error) => {
         console.log(error);
