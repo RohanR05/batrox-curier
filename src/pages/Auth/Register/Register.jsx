@@ -13,7 +13,7 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const { registerUser } = useAuth();
+  const { registerUser, updateUserProfile } = useAuth();
 
   const handleRegisterForm = (data) => {
     const profileImg = data.photo[0];
@@ -28,6 +28,18 @@ const Register = () => {
 
         axios.post(image_api_url, formData).then((res) => {
           console.log(res.data.data.url);
+
+          const userProfile = {
+            displayName: data.name,
+            photoURL: res.data.data.url,
+          };
+          updateUserProfile(userProfile)
+            .then((res) => {
+              console.log("update success");
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         });
       })
       .catch((error) => {
