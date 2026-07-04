@@ -44,6 +44,27 @@ const Register = () => {
             onSubmit={handleSubmit(handleRegisterForm)}
             className="space-y-5"
           >
+            {/* name */}
+            <div>
+              <label className="label font-medium">Name</label>
+
+              <label className="input input-bordered flex items-center gap-2">
+                <FaEnvelope className="text-secondary" />
+                <input
+                  type="text"
+                  className="grow"
+                  placeholder="Enter your name"
+                  {...register("name", {
+                    required: "Name is required",
+                  })}
+                />
+              </label>
+
+              {errors.name && (
+                <p className="text-error text-sm mt-1">{errors.name.message}</p>
+              )}
+            </div>{" "}
+            {/* Email */}
             <div>
               <label className="label font-medium">Email</label>
 
@@ -65,7 +86,30 @@ const Register = () => {
                 </p>
               )}
             </div>
+            {/* photo */}
+            <div>
+              <label className="label font-medium">Photo</label>
 
+              <label className="input input-bordered flex items-center gap-2">
+                <FaEnvelope className="text-secondary" />
+                <input
+                  type="file"
+                  className="file-input-ghost"
+                  className="grow"
+                  placeholder="Enter your photo"
+                  {...register("photo", {
+                    required: "Email is required",
+                  })}
+                />
+              </label>
+
+              {errors.photo && (
+                <p className="text-error text-sm mt-1">
+                  {errors.photo.message}
+                </p>
+              )}
+            </div>
+            {/* password */}
             <div>
               <label className="label font-medium">Password</label>
 
@@ -95,7 +139,6 @@ const Register = () => {
                 </p>
               )}
             </div>
-
             <button className="btn btn-secondary w-full">Create Account</button>
           </form>
 
