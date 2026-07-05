@@ -6,7 +6,7 @@ import { auth } from "../../firebase/firebase.init";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
-  console.log(user)
+  console.log(user);
 
   const handleLogout = () => {
     logOut()
@@ -26,8 +26,8 @@ const Navbar = () => {
       <li>
         <NavLink to={"/coverage"}>Coverage</NavLink>
       </li>
-      <li>
-        <NavLink to={"/register"}>register</NavLink>
+      <li className="inline-block md:hidden">
+        <NavLink to={"/beARider"}>Be A Rider?</NavLink>
       </li>
     </>
   );
@@ -66,6 +66,11 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end">
+          <NavLink to={"/beARider"}>
+            <button className="btn text-secondary hidden  md:inline-block mr-3 text-lg">
+              Be a Rider
+            </button>
+          </NavLink>
           {user ? (
             <button
               onClick={handleLogout}
