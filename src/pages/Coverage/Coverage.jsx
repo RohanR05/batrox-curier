@@ -62,7 +62,10 @@ const Coverage = () => {
           />
           {data.map((center, index) => {
             return (
-              <Marker position={[center.latitude, center.longitude]}>
+              <Marker
+                key={index}
+                position={[center.latitude, center.longitude]}
+              >
                 <Popup className="font-bold text-lg">
                   <strong>District: {center.district}</strong>
                   <p className="text-secondary text-lg">
