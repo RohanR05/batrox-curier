@@ -1,12 +1,12 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 import Logo from "../Logo/Logo";
 import useAuth from "../../Hooks/useAuth";
 import { auth } from "../../firebase/firebase.init";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
-  console.log(user);
+  const location = useLocation();
 
   const handleLogout = () => {
     logOut()
@@ -79,7 +79,7 @@ const Navbar = () => {
               Logout
             </button>
           ) : (
-            <NavLink to={"/login"}>
+            <NavLink state={location} to={"/login"}>
               <button className="btn btn-outline text-md md:text-lg">
                 Login
               </button>

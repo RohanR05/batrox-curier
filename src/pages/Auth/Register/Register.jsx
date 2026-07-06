@@ -1,19 +1,21 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { FaEnvelope, FaLock, FaUserPlus } from "react-icons/fa";
 import useAuth from "../../../Hooks/useAuth";
 import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
 import axios from "axios";
 
 const Register = () => {
+  const { registerUser, updateUserProfile } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const { registerUser, updateUserProfile } = useAuth();
 
   const handleRegisterForm = (data) => {
     const profileImg = data.photo[0];
@@ -36,12 +38,14 @@ const Register = () => {
           updateUserProfile(userProfile)
             .then((res) => {
               console.log("update success");
+              navigate(location.state?.pathname || "/");
             })
             .catch((error) => {
               console.log(error);
             });
         });
       })
+
       .catch((error) => {
         console.log(error);
       });
@@ -171,6 +175,7 @@ const Register = () => {
           <div className="flex justify-between text-sm">
             <NavLink
               to="/login"
+              state={location.state}
               className="text-secondary hover:text-black font-medium"
             >
               Login

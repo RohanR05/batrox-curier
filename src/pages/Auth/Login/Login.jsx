@@ -1,25 +1,30 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaEnvelope, FaLock, FaSignInAlt } from "react-icons/fa";
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../Hooks/useAuth";
 import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
 
 const Login = () => {
+  const { signInUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const { signInUser } = useAuth();
-
   const handleLoginForm = (data) => {
-    signInUser(data.email, data.password).then((result) => {
-      console.log(result).catch((error) => {
+    signInUser(data.email, data.password)
+      .then((res) => {
+        console.log(res);
+        navigate(location.state?.pathname || "/");
+      })
+      .catch((error) => {
         console.log(error);
       });
-    });
   };
 
   return (
@@ -116,6 +121,7 @@ const Login = () => {
             Don't have an account?{" "}
             <NavLink
               to="/register"
+              state={location.state}
               className="text-secondary font-semibold hover:underline"
             >
               Register
