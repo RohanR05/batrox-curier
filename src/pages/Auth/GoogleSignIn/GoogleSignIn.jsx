@@ -6,13 +6,14 @@ const GoogleSignIn = () => {
   const { googleSignInUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
-  console.log(location.state.pathname);
+  const from = location.state?.pathname || "/";
+  console.log(from);
+
   const handleGoogleSignIn = () => {
     googleSignInUser()
       .then((res) => {
         console.log(res.user);
-        navigate(location.state?.pathname || "/");
+        navigate(from);
       })
       .catch((error) => {
         console.log(error);
