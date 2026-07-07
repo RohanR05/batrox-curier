@@ -12,6 +12,7 @@ const Navbar = () => {
     logOut()
       .then((result) => {
         console.log(result);
+        alert("logout");
       })
       .catch((error) => {
         console.log(error);
@@ -25,6 +26,9 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink to={"/coverage"}>Coverage</NavLink>
+      </li>
+      <li>
+        <NavLink to={"/send-Parcel"}>Send Percel</NavLink>
       </li>
       <li className="inline-block md:hidden">
         <NavLink to={"/beARider"}>Be A Rider?</NavLink>

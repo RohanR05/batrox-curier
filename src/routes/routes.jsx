@@ -7,6 +7,7 @@ import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import BeARider from "../pages/BeARider/BeARider";
 import PrivetRoutes from "./PrivetRoutes";
+import SendParcel from "../pages/sendParcel/sendParcel";
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,14 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "send-Parcel",
+        element: (
+          <PrivetRoutes>
+            <SendParcel></SendParcel>
+          </PrivetRoutes>
+        ),
       },
       {
         path: "/beARider",
