@@ -19,8 +19,9 @@ const SendParcel = () => {
       </div>
       {/* total form */}
       <form onSubmit={handleSubmit(handleSendParcelForm)}>
-        <input type="text" />
-        <input type="submit" />
+        <div className="bg-primary text-black">
+          <input type="text" name="Title" id="" placeholder="Parcel Title" />
+        </div>
       </form>
     </div>
   );
