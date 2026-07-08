@@ -47,6 +47,8 @@ const Coverage = () => {
           placeholder="Search"
           name="search"
         />
+        <input type="submit"  className=""/>
+        <h1 className="text-3xl">hii</h1>
       </form>
       <div className="w-full h-[700px] border-3 border-secondary">
         <MapContainer
