@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { FaBoxOpen, FaFileAlt } from "react-icons/fa";
 import ParcelInfo from "./ParcelInfo";
 import SenderInfo from "./SenderInfo";
+import ReceiverInfo from "./ReceiverInfo";
 
 const SendParcel = () => {
   const {
@@ -40,12 +41,12 @@ const SendParcel = () => {
         onSubmit={handleSubmit(handleSendParcelForm)}
         className=" space-y-6"
       >
-        <ParcelInfo
-          register={register}
-          errors={errors}
-          watch={watch}
-        ></ParcelInfo>
-        <SenderInfo register={register} errors={errors}></SenderInfo>
+        <ParcelInfo register={register} errors={errors} watch={watch} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <SenderInfo register={register} errors={errors} />
+          <ReceiverInfo register={register} errors={errors} />
+        </div>
+
         <button className="btn btn-secondary w-full text-white">
           Continue
         </button>
