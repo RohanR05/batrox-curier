@@ -9,7 +9,7 @@ const ReceiverInfo = ({ register, errors }) => {
           Receiver Information
         </h3>
 
-        <div className="gap-5">
+        <div className="space-y-3">
           {/* Receiver Name */}
           <div>
             <label className="label font-medium">Receiver Name</label>

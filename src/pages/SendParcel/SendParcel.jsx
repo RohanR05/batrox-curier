@@ -19,7 +19,7 @@ const SendParcel = () => {
   };
 
   return (
-    <div className=" mx-auto">
+    <div className=" mx-auto p-2">
       {/* Header */}
       <div className="bg-primary rounded-t-2xl p-8">
         <div className="flex items-center gap-4">
@@ -39,7 +39,7 @@ const SendParcel = () => {
       {/* Form */}
       <form
         onSubmit={handleSubmit(handleSendParcelForm)}
-        className=" space-y-6"
+        className=" space-y-6 mt-6"
       >
         <ParcelInfo register={register} errors={errors} watch={watch} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

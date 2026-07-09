@@ -45,7 +45,7 @@ const ParcelInfo = ({ register, errors, watch }) => {
         )}
       </div>
       {/* Parcel Title */}
-      <div className="flex items-center flex-wrap mt-4">
+      <div className="flex items-center flex-wrap mt-4 gap-3">
         <div>
           <label className="label font-semibold text-secondary">
             Parcel Title
@@ -67,7 +67,7 @@ const ParcelInfo = ({ register, errors, watch }) => {
             <p className="text-error text-sm mt-2">{errors.name.message}</p>
           )}
         </div>
-        <div className="ml-8">
+        <div className="ml-0 md:ml-8">
           {parcelType === "Non Document" && (
             <div className="">
               <label className="label">
