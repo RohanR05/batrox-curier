@@ -36,14 +36,14 @@ const ReceiverInfo = ({ register, errors }) => {
               type="text"
               className="input input-bordered w-full"
               placeholder="Enter receiver Contect"
-              {...register("senderContect", {
+              {...register("receiverContect", {
                 required: "Receiver Contect is required",
               })}
             />
 
-            {errors.senderContect && (
+            {errors.receiverContect && (
               <p className="text-error text-sm mt-1">
-                {errors.senderContect.message}
+                {errors.receiverContect.message}
               </p>
             )}
           </div>
@@ -58,7 +58,7 @@ const ReceiverInfo = ({ register, errors }) => {
                   type="radio"
                   value="Inside City"
                   className="radio radio-secondary"
-                  {...register("senderArea", {
+                  {...register("receiverArea", {
                     required: "Select pickup area",
                   })}
                 />
@@ -70,7 +70,7 @@ const ReceiverInfo = ({ register, errors }) => {
                   type="radio"
                   value="Outside City"
                   className="radio radio-secondary"
-                  {...register("senderArea", {
+                  {...register("receiverArea", {
                     required: "Select pickup area",
                   })}
                 />
@@ -82,7 +82,7 @@ const ReceiverInfo = ({ register, errors }) => {
                   type="radio"
                   value="Remote Area"
                   className="radio radio-secondary"
-                  {...register("senderArea", {
+                  {...register("receiverArea", {
                     required: "Select pickup area",
                   })}
                 />
@@ -90,9 +90,9 @@ const ReceiverInfo = ({ register, errors }) => {
               </label>
             </div>
 
-            {errors.senderArea && (
+            {errors.receiverArea && (
               <p className="text-error text-sm mt-1">
-                {errors.senderArea.message}
+                {errors.receiverArea.message}
               </p>
             )}
           </div>

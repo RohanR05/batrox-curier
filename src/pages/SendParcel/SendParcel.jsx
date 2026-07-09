@@ -15,7 +15,7 @@ const SendParcel = () => {
   const parcelType = watch("parcelType");
 
   const handleSendParcelForm = (data) => {
-    console.log(data);
+    console.log({data});
   };
 
   return (
