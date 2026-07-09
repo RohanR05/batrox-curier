@@ -50,49 +50,24 @@ const ReceiverInfo = ({ register, errors }) => {
 
           {/* Receiver Area */}
           <div>
-            <label className="label font-medium">Receiver Area</label>
+            <select
+              defaultValue=""
+              {...register("delevaryArea", {
+                required: "Please select a Delevary area",
+              })}
+              className="select select-bordered w-full"
+            >
+              <option value="" disabled>
+                Select Delevary Area
+              </option>
+              <option value="Dhaka">Dhaka</option>
+              <option value="Chattogram">Chattogram</option>
+              <option value="Khulna">Khulna</option>
+            </select>
 
-            <div className="space-y-2 mt-2">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="Inside City"
-                  className="radio radio-secondary"
-                  {...register("receiverArea", {
-                    required: "Select pickup area",
-                  })}
-                />
-                <span>Inside City</span>
-              </label>
-
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="Outside City"
-                  className="radio radio-secondary"
-                  {...register("receiverArea", {
-                    required: "Select pickup area",
-                  })}
-                />
-                <span>Outside City</span>
-              </label>
-
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="Remote Area"
-                  className="radio radio-secondary"
-                  {...register("receiverArea", {
-                    required: "Select pickup area",
-                  })}
-                />
-                <span>Remote Area</span>
-              </label>
-            </div>
-
-            {errors.receiverArea && (
-              <p className="text-error text-sm mt-1">
-                {errors.receiverArea.message}
+            {errors.delevaryArea && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.delevaryArea.message}
               </p>
             )}
           </div>
@@ -104,7 +79,7 @@ const ReceiverInfo = ({ register, errors }) => {
             <textarea
               rows={3}
               className="textarea textarea-bordered w-full"
-              placeholder="Enter pickup address"
+              placeholder="Enter Delevary address"
               {...register("receiverAddress", {
                 required: "Receiver address is required",
               })}

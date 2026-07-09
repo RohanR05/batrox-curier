@@ -50,49 +50,24 @@ const SenderInfo = ({ register, errors }) => {
 
           {/* Pickup Area */}
           <div>
-            <label className="label font-medium">Pickup Area</label>
+            <select
+              defaultValue=""
+              {...register("pickupArea", {
+                required: "Please select a pickup area",
+              })}
+              className="select select-bordered w-full"
+            >
+              <option value="" disabled>
+                Select Pickup Area
+              </option>
+              <option value="Dhaka">Dhaka</option>
+              <option value="Chattogram">Chattogram</option>
+              <option value="Khulna">Khulna</option>
+            </select>
 
-            <div className="space-y-2 mt-2">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="Inside City"
-                  className="radio radio-secondary"
-                  {...register("senderArea", {
-                    required: "Select pickup area",
-                  })}
-                />
-                <span>Inside City</span>
-              </label>
-
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="Outside City"
-                  className="radio radio-secondary"
-                  {...register("senderArea", {
-                    required: "Select pickup area",
-                  })}
-                />
-                <span>Outside City</span>
-              </label>
-
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input
-                  type="radio"
-                  value="Remote Area"
-                  className="radio radio-secondary"
-                  {...register("senderArea", {
-                    required: "Select pickup area",
-                  })}
-                />
-                <span>Remote Area</span>
-              </label>
-            </div>
-
-            {errors.senderArea && (
-              <p className="text-error text-sm mt-1">
-                {errors.senderArea.message}
+            {errors.pickupArea && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.pickupArea.message}
               </p>
             )}
           </div>
