@@ -1,6 +1,9 @@
 import React from "react";
 
-const SenderInfo = ({ register, errors }) => {
+const SenderInfo = ({ register, errors, serviceArea }) => {
+  const duplicateRegion = serviceArea.map((c) => c.region);
+  const region = [...new Set(duplicateRegion)];
+  console.log(region);
   return (
     <div className="border rounded-2xl shadow border-secondary">
       {/* Sender Information */}
@@ -60,9 +63,11 @@ const SenderInfo = ({ register, errors }) => {
               <option value="" disabled>
                 Select Pickup Area
               </option>
-              <option value="Dhaka">Dhaka</option>
-              <option value="Chattogram">Chattogram</option>
-              <option value="Khulna">Khulna</option>
+              {region.map((r, index) => (
+                <option key={index} value={r}>
+                  {r}
+                </option>
+              ))}{" "}
             </select>
 
             {errors.pickupArea && (

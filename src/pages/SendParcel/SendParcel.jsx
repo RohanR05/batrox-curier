@@ -4,8 +4,10 @@ import { FaBoxOpen, FaFileAlt } from "react-icons/fa";
 import ParcelInfo from "./ParcelInfo";
 import SenderInfo from "./SenderInfo";
 import ReceiverInfo from "./ReceiverInfo";
+import { useLoaderData } from "react-router";
 
 const SendParcel = () => {
+  const serviceArea = useLoaderData();
   const {
     register,
     handleSubmit,
@@ -15,7 +17,7 @@ const SendParcel = () => {
   const parcelType = watch("parcelType");
 
   const handleSendParcelForm = (data) => {
-    console.log({data});
+    console.log({ data });
   };
 
   return (
@@ -43,8 +45,16 @@ const SendParcel = () => {
       >
         <ParcelInfo register={register} errors={errors} watch={watch} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <SenderInfo register={register} errors={errors} />
-          <ReceiverInfo register={register} errors={errors} />
+          <SenderInfo
+            register={register}
+            errors={errors}
+            serviceArea={serviceArea}
+          />
+          <ReceiverInfo
+            register={register}
+            errors={errors}
+            serviceArea={serviceArea}
+          />
         </div>
 
         <button className="btn btn-secondary w-full text-white">

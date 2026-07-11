@@ -29,6 +29,7 @@ export const router = createBrowserRouter([
       {
         path: "/send-Parcel",
         Component: SendParcel,
+        loader: () => fetch("/serviceJone.json").then((res) => res.json()),
       },
       {
         path: "/coverage",
