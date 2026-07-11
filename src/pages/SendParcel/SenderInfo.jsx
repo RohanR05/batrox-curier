@@ -93,7 +93,7 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
           <div>
             <select
               defaultValue=""
-              {...register("senderRegion", {
+              {...register("senderArea", {
                 required: "Please select a pickup District",
               })}
               className="select select-bordered w-full"
