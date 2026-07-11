@@ -15,6 +15,7 @@ const SendParcel = () => {
     watch,
   } = useForm();
   const parcelType = watch("parcelType");
+  const senderRegion = watch("senderRegion");
 
   const handleSendParcelForm = (data) => {
     console.log({ data });
@@ -49,6 +50,7 @@ const SendParcel = () => {
             register={register}
             errors={errors}
             serviceArea={serviceArea}
+            senderRegion={senderRegion}
           />
           <ReceiverInfo
             register={register}

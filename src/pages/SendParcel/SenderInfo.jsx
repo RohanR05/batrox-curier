@@ -1,9 +1,21 @@
 import React from "react";
 
-const SenderInfo = ({ register, errors, serviceArea }) => {
+const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
   const duplicateRegion = serviceArea.map((c) => c.region);
   const region = [...new Set(duplicateRegion)];
-  console.log(region);
+  console.log(region)
+
+  const district = [
+    ...new Set(
+      serviceArea
+        .filter((item) => item.region === senderRegion)
+        .map((item) => item.district)
+    ),
+  ];
+
+  console.log(district);
+
+
   return (
     <div className="border rounded-2xl shadow border-secondary">
       {/* Sender Information */}
@@ -51,17 +63,17 @@ const SenderInfo = ({ register, errors, serviceArea }) => {
             )}
           </div>
 
-          {/* Pickup Area */}
+          {/* Pickup region */}
           <div>
             <select
               defaultValue=""
-              {...register("pickupArea", {
-                required: "Please select a pickup area",
+              {...register("senderRegion", {
+                required: "Please select a pickup region",
               })}
               className="select select-bordered w-full"
             >
               <option value="" disabled>
-                Select Pickup Area
+                Select Pickup region
               </option>
               {region.map((r, index) => (
                 <option key={index} value={r}>
@@ -70,9 +82,35 @@ const SenderInfo = ({ register, errors, serviceArea }) => {
               ))}{" "}
             </select>
 
-            {errors.pickupArea && (
+            {errors.pickupRegion && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.pickupArea.message}
+                {errors.pickupRegion.message}
+              </p>
+            )}
+          </div>
+
+          {/* Pickup District */}
+          <div>
+            <select
+              defaultValue=""
+              {...register("senderRegion", {
+                required: "Please select a pickup District",
+              })}
+              className="select select-bordered w-full"
+            >
+              <option value="" disabled>
+                Select Pickup District
+              </option>
+              {district.map((r, index) => (
+                <option key={index} value={r}>
+                  {r}
+                </option>
+              ))}{" "}
+            </select>
+
+            {errors.pickupRegion && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.pickupRegion.message}
               </p>
             )}
           </div>
