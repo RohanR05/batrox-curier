@@ -1,6 +1,18 @@
 import React from "react";
 
-const ReceiverInfo = ({ register, errors }) => {
+const ReceiverInfo = ({ register, errors, receiverRegion, serviceArea }) => {
+  const dupicateAreas = serviceArea.map((r) => r.region);
+  const areas = [...new Set(dupicateAreas)];
+
+  const district = [
+    ...new Set(
+      serviceArea
+        .filter((c) => c.region === receiverRegion)
+        .map((r) => r.district),
+    ),
+  ];
+  console.log(district);
+
   return (
     <div className="border rounded-2xl shadow border-secondary">
       {/* Receiver Information */}
@@ -48,26 +60,54 @@ const ReceiverInfo = ({ register, errors }) => {
             )}
           </div>
 
-          {/* Receiver Area */}
+          {/* Receiver region */}
           <div>
             <select
               defaultValue=""
-              {...register("delevaryArea", {
+              {...register("receiverRegion", {
                 required: "Please select a Delevary area",
               })}
               className="select select-bordered w-full"
             >
               <option value="" disabled>
-                Select Delevary Area
+                Select Delevary Region
               </option>
-              <option value="Dhaka">Dhaka</option>
-              <option value="Chattogram">Chattogram</option>
-              <option value="Khulna">Khulna</option>
+              {areas.map((r, index) => (
+                <option value={r} key={index}>
+                  {r}
+                </option>
+              ))}
             </select>
 
-            {errors.delevaryArea && (
+            {errors.delevaryRegion && (
               <p className="text-red-500 text-sm mt-1">
-                {errors.delevaryArea.message}
+                {errors.delevaryRegion.message}
+              </p>
+            )}
+          </div>
+
+          {/* Receiver Area */}
+          <div>
+            <select
+              defaultValue=""
+              {...register("serviceArea", {
+                required: "Please select a Delevary area",
+              })}
+              className="select select-bordered w-full"
+            >
+              <option value="" disabled>
+                Select Delevary Region
+              </option>
+              {district.map((r, index) => (
+                <option value={r} key={index}>
+                  {r}
+                </option>
+              ))}
+            </select>
+
+            {errors.delevaryRegion && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.delevaryRegion.message}
               </p>
             )}
           </div>

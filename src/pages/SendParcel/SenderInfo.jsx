@@ -3,7 +3,6 @@ import React from "react";
 const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
   const duplicateRegion = serviceArea.map((c) => c.region);
   const region = [...new Set(duplicateRegion)];
-  console.log(region)
 
   const district = [
     ...new Set(
@@ -12,8 +11,6 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
         .map((item) => item.district)
     ),
   ];
-
-  console.log(district);
 
 
   return (
