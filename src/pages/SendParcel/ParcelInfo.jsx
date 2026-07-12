@@ -57,7 +57,7 @@ const ParcelInfo = ({ register, errors, watch }) => {
               type="text"
               className="grow"
               placeholder="Enter parcel title"
-              {...register("name", {
+              {...register("parcelTitle", {
                 required: "Parcel title is required",
               })}
             />
@@ -79,6 +79,7 @@ const ParcelInfo = ({ register, errors, watch }) => {
                 step="0.1"
                 placeholder="Enter parcel weight"
                 {...register("weight", {
+                  valueAsNumber: true,
                   required: "Weight is required for non-document parcels",
                   min: {
                     value: 0.1,

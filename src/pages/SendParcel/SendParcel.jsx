@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { FaBoxOpen, FaFileAlt } from "react-icons/fa";
+import { FaBoxOpen } from "react-icons/fa";
 import ParcelInfo from "./ParcelInfo";
 import SenderInfo from "./SenderInfo";
 import ReceiverInfo from "./ReceiverInfo";
@@ -14,12 +14,11 @@ const SendParcel = () => {
     formState: { errors },
     watch,
   } = useForm();
-  const parcelType = watch("parcelType");
   const senderRegion = watch("senderRegion");
   const receiverRegion = watch("receiverRegion");
 
   const handleSendParcelForm = (data) => {
-    console.log({ data });
+    console.log(data);
   };
 
   return (

@@ -1,17 +1,23 @@
 import React from "react";
+import {
+  FaUser,
+  FaPhoneAlt,
+  FaGlobeAsia,
+  FaMapMarkerAlt,
+  FaHome,
+} from "react-icons/fa";
 
 const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
   const duplicateRegion = serviceArea.map((c) => c.region);
-  const region = [...new Set(duplicateRegion)];
+  const regions = [...new Set(duplicateRegion)];
 
-  const district = [
+  const districts = [
     ...new Set(
       serviceArea
         .filter((item) => item.region === senderRegion)
-        .map((item) => item.district)
+        .map((item) => item.district),
     ),
   ];
-
 
   return (
     <div className="border rounded-2xl shadow border-secondary">
@@ -25,14 +31,18 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
           {/* Sender Name */}
           <div>
             <label className="label font-medium">Sender Name</label>
-            <input
-              type="text"
-              className="input input-bordered w-full"
-              placeholder="Enter sender name"
-              {...register("senderName", {
-                required: "Sender name is required",
-              })}
-            />
+
+            <label className="input input-bordered flex items-center gap-2 w-full">
+              <FaUser className="text-secondary" />
+              <input
+                type="text"
+                className="grow"
+                placeholder="Enter sender name"
+                {...register("senderName", {
+                  required: "Sender name is required",
+                })}
+              />
+            </label>
 
             {errors.senderName && (
               <p className="text-error text-sm mt-1">
@@ -41,17 +51,21 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
             )}
           </div>
 
-          {/* Sender Contect */}
+          {/* Sender Contact */}
           <div>
-            <label className="label font-medium">Sender Contect</label>
-            <input
-              type="text"
-              className="input input-bordered w-full"
-              placeholder="Enter sender Contect"
-              {...register("senderContect", {
-                required: "Sender Contect is required",
-              })}
-            />
+            <label className="label font-medium">Sender Contact</label>
+
+            <label className="input input-bordered flex items-center gap-2 w-full">
+              <FaPhoneAlt className="text-secondary" />
+              <input
+                type="text"
+                className="grow"
+                placeholder="Enter sender contact"
+                {...register("senderContect", {
+                  required: "Sender Contact is required",
+                })}
+              />
+            </label>
 
             {errors.senderContect && (
               <p className="text-error text-sm mt-1">
@@ -59,71 +73,87 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
               </p>
             )}
           </div>
-
-          {/* Pickup region */}
+          {/* Pickup Region */}
           <div>
-            <select
-              defaultValue=""
-              {...register("senderRegion", {
-                required: "Please select a pickup region",
-              })}
-              className="select select-bordered w-full"
-            >
-              <option value="" disabled>
-                Select Pickup region
-              </option>
-              {region.map((r, index) => (
-                <option key={index} value={r}>
-                  {r}
-                </option>
-              ))}{" "}
-            </select>
+            <label className="label font-medium">Pickup Region</label>
 
-            {errors.pickupRegion && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.pickupRegion.message}
+            <label className="select select-bordered flex items-center gap-2 w-full">
+              <FaGlobeAsia className="text-secondary" />
+
+              <select
+                className="grow"
+                defaultValue=""
+                {...register("senderRegion", {
+                  required: "Please select a pickup region",
+                })}
+              >
+                <option value="" disabled>
+                  Select Pickup Region
+                </option>
+
+                {regions.map((r, index) => (
+                  <option key={index} value={r}>
+                    {r}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {errors.senderRegion && (
+              <p className="text-error text-sm mt-1">
+                {errors.senderRegion.message}
               </p>
             )}
           </div>
-
           {/* Pickup District */}
           <div>
-            <select
-              defaultValue=""
-              {...register("senderArea", {
-                required: "Please select a pickup District",
-              })}
-              className="select select-bordered w-full"
-            >
-              <option value="" disabled>
-                Select Pickup District
-              </option>
-              {district.map((r, index) => (
-                <option key={index} value={r}>
-                  {r}
-                </option>
-              ))}{" "}
-            </select>
+            <label className="label font-medium">Pickup District</label>
 
-            {errors.pickupRegion && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.pickupRegion.message}
+            <label className="select select-bordered flex items-center gap-2 w-full">
+              <FaMapMarkerAlt className="text-secondary" />
+
+              <select
+                className="grow"
+                defaultValue=""
+                {...register("senderArea", {
+                  required: "Please select a pickup district",
+                })}
+              >
+                <option value="" disabled>
+                  Select Pickup District
+                </option>
+
+                {districts.map((r, index) => (
+                  <option key={index} value={r}>
+                    {r}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            {errors.senderArea && (
+              <p className="text-error text-sm mt-1">
+                {errors.senderArea.message}
               </p>
             )}
           </div>
 
-          {/* Sender Address */}
-          <div className="">
+          {/* Pickup Address */}
+          <div>
             <label className="label font-medium">Pickup Address</label>
 
-            <textarea
-              rows={3}
-              className="textarea textarea-bordered w-full"
-              placeholder="Enter pickup address"
-              {...register("senderAddress", {
-                required: "Pickup address is required",
-              })}
-            />
+            <label className="textarea textarea-bordered flex gap-2 w-full">
+              <FaHome className="text-secondary mt-1" />
+
+              <textarea
+                rows={3}
+                className="grow resize-none"
+                placeholder="Enter pickup address"
+                {...register("senderAddress", {
+                  required: "Pickup address is required",
+                })}
+              />
+            </label>
 
             {errors.senderAddress && (
               <p className="text-error text-sm mt-1">
