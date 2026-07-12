@@ -1,8 +1,7 @@
 import React from "react";
 import { FaFileAlt } from "react-icons/fa";
 
-const ParcelInfo = ({ register, errors, watch }) => {
-  const parcelType = watch("parcelType");
+const ParcelInfo = ({ register, errors, parcelType }) => {
   return (
     <div className="border p-8 rounded-2xl shadow border-secondary">
       {" "}

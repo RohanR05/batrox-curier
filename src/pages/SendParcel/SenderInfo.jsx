@@ -73,6 +73,7 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
               </p>
             )}
           </div>
+
           {/* Pickup Region */}
           <div>
             <label className="label font-medium">Pickup Region</label>
@@ -105,6 +106,7 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
               </p>
             )}
           </div>
+
           {/* Pickup District */}
           <div>
             <label className="label font-medium">Pickup District</label>

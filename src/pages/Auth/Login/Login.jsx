@@ -4,6 +4,7 @@ import { FaEnvelope, FaLock, FaSignInAlt } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import useAuth from "../../../Hooks/useAuth";
 import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const { signInUser } = useAuth();
@@ -20,6 +21,20 @@ const Login = () => {
     signInUser(data.email, data.password)
       .then((res) => {
         console.log(res);
+        Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        }).fire({
+          icon: "success",
+          title: "Signed in successfully",
+        });
         navigate(location.state?.pathname || "/");
       })
       .catch((error) => {

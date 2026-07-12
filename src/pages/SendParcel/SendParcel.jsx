@@ -5,6 +5,7 @@ import ParcelInfo from "./ParcelInfo";
 import SenderInfo from "./SenderInfo";
 import ReceiverInfo from "./ReceiverInfo";
 import { useLoaderData } from "react-router";
+import Swal from "sweetalert2";
 
 const SendParcel = () => {
   const serviceArea = useLoaderData();
@@ -16,8 +17,45 @@ const SendParcel = () => {
   } = useForm();
   const senderRegion = watch("senderRegion");
   const receiverRegion = watch("receiverRegion");
+  const parcelType = watch("parcelType");
 
   const handleSendParcelForm = (data) => {
+    const isDocument = data.parcelType === "Document";
+    const sameDistrict = data.senderArea === data.receiverArea;
+    const parcelWeight = Number(data.weight);
+
+    let cost = 0;
+    if (isDocument) {
+      cost = sameDistrict ? 60 : 80;
+    } else {
+      if (parcelWeight <= 3) {
+        cost = sameDistrict ? 110 : 150;
+      } else {
+        const minCharge = sameDistrict ? 110 : 150;
+        const extraWeight = parcelWeight - 3;
+        const extraCharge = sameDistrict
+          ? extraWeight * 40
+          : extraWeight * 40 + 40;
+        cost = minCharge + extraCharge;
+      }
+    }
+    Swal.fire({
+      title: `Your total payment is ${cost} taka.`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, I agree!",
+    }).then((result) => {
+      if (result.isConfirmed)
+        Swal.fire({
+          title: "Confirmed!",
+          text: "Your parcel has been confirmed.",
+          icon: "success",
+        });
+    });
+    console.log(cost);
     console.log(data);
   };
 
@@ -44,7 +82,11 @@ const SendParcel = () => {
         onSubmit={handleSubmit(handleSendParcelForm)}
         className=" space-y-6 mt-6"
       >
-        <ParcelInfo register={register} errors={errors} watch={watch} />
+        <ParcelInfo
+          register={register}
+          errors={errors}
+          parcelType={parcelType}
+        />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <SenderInfo
             register={register}

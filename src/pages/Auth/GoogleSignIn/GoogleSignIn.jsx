@@ -1,6 +1,7 @@
 import React from "react";
 import useAuth from "../../../Hooks/useAuth";
 import { useLocation, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const GoogleSignIn = () => {
   const { googleSignInUser } = useAuth();
@@ -13,6 +14,20 @@ const GoogleSignIn = () => {
     googleSignInUser()
       .then((res) => {
         console.log(res.user);
+        Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        }).fire({
+          icon: "success",
+          title: "Signed in successfully",
+        });
         navigate(from);
       })
       .catch((error) => {
