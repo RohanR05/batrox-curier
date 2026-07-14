@@ -6,9 +6,11 @@ import SenderInfo from "./SenderInfo";
 import ReceiverInfo from "./ReceiverInfo";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const SendParcel = () => {
   const serviceArea = useLoaderData();
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -49,11 +51,14 @@ const SendParcel = () => {
       confirmButtonText: "Yes, I agree!",
     }).then((result) => {
       if (result.isConfirmed)
-        Swal.fire({
-          title: "Confirmed!",
-          text: "Your parcel has been confirmed.",
-          icon: "success",
+        axiosSecure.post("/parcels", data).then((res) => {
+          console.log("after saving parcels data", res.data);
         });
+      Swal.fire({
+        title: "Confirmed!",
+        text: "Your parcel has been confirmed.",
+        icon: "success",
+      });
     });
     console.log(cost);
     console.log(data);
