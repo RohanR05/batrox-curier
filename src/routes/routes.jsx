@@ -10,6 +10,7 @@ import PrivetRoutes from "./PrivetRoutes";
 import SendParcel from "../pages/SendParcel/SendParcel";
 import DashBoardHome from "../pages/DashBoard/DashBoardHome/DashBoardHome";
 import DashBoardLayout from "../RootLayout/DashBoardLayout";
+import MyParcels from "../pages/DashBoard/MyParcels/MyParcels";
 
 export const router = createBrowserRouter([
   {
@@ -41,7 +42,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "dashBoard",
+    path: "/dashBoard",
     element: (
       <PrivetRoutes>
         <DashBoardLayout></DashBoardLayout>
@@ -51,6 +52,10 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: DashBoardHome,
+      },
+      {
+        path: "my-parcels",
+        Component: MyParcels,
       },
     ],
   },
