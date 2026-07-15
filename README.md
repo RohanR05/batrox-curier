@@ -1,16 +1,135 @@
-# React + Vite
+# 🚚 Batrox Courier
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A modern courier and parcel delivery web application built with React. Batrox Courier provides a seamless experience for sending parcels, tracking deliveries, and managing courier services with a clean and responsive user interface.
 
-Currently, two official plugins are available:
+> **🚧 Project Status:** Under Development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* 🔐 Firebase Authentication (Email/Password & Google Sign-In)
+* 📦 Send Parcel with dynamic pricing
+* 👤 Sender & Receiver information management
+* 📍 Region and district-based delivery selection
+* 💰 Automatic delivery charge calculation
+* 💳 Stripe payment integration (In Progress)
+* 📱 Fully responsive UI
+* 🎨 Modern interface built with Tailwind CSS & DaisyUI
+* ⚡ Fast development using Vite
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React
+* React Router
+* React Hook Form
+* Tailwind CSS
+* DaisyUI
+* Firebase Authentication
+* Axios
+* React Icons
+
+### Backend (In Progress)
+
+* Node.js
+* Express.js
+* MongoDB
+* JWT Authentication
+* Stripe Payment Gateway
+
+---
+
+## 📂 Current Progress
+
+* ✅ Authentication
+* ✅ Responsive UI
+* ✅ Parcel Sending Form
+* ✅ Sender & Receiver Information
+* ✅ Dynamic Delivery Charge Calculation
+* 🔄 Payment Integration
+* 🔄 Parcel Tracking
+* 🔄 Dashboard
+* 🔄 Admin Features
+
+---
+
+## 🚀 Getting Started
+
+### Clone the repository
+
+```bash
+git clone <repository-url>
+```
+
+### Install dependencies
+
+```bash
+npm install
+```
+
+### Start the development server
+
+```bash
+npm run dev
+```
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+│
+├── components/
+├── pages/
+├── routes/
+├── hooks/
+├── providers/
+├── layouts/
+├── services/
+├── assets/
+└── main.jsx
+```
+
+---
+
+## 🎯 Upcoming Features
+
+* Live parcel tracking
+* Payment history
+* User dashboard
+* Rider dashboard
+* Admin dashboard
+* Parcel status timeline
+* Email notifications
+* Delivery analytics
+
+---
+
+## 📸 Screenshots
+
+Screenshots will be added after the first stable release.
+
+---
+
+## 🤝 Contributing
+
+Contributions, suggestions, and feedback are welcome. Feel free to fork the repository and submit a pull request.
+
+---
+
+## 📄 License
+
+This project is currently being developed for learning and portfolio purposes.
+
+---
+
+### Developed by
+
+**Rohan Kabir**
+
+Building **Batrox Courier** with ❤️ using the MERN Stack.
