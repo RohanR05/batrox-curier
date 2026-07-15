@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { FaBoxOpen } from "react-icons/fa";
 import ParcelInfo from "./ParcelInfo";
@@ -7,19 +7,31 @@ import ReceiverInfo from "./ReceiverInfo";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAuth from "../../Hooks/useAuth";
 
 const SendParcel = () => {
   const serviceArea = useLoaderData();
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm();
   const senderRegion = watch("senderRegion");
   const receiverRegion = watch("receiverRegion");
   const parcelType = watch("parcelType");
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        senderName: user.displayName || "",
+        senderEmail: user.email || "",
+      });
+    }
+  }, [user, reset]);
 
   const handleSendParcelForm = (data) => {
     const isDocument = data.parcelType === "Document";
@@ -98,6 +110,7 @@ const SendParcel = () => {
             errors={errors}
             serviceArea={serviceArea}
             senderRegion={senderRegion}
+            user={user}
           />
           <ReceiverInfo
             register={register}

@@ -30,6 +30,11 @@ const Navbar = () => {
       <li>
         <NavLink to={"/send-Parcel"}>Send Percel</NavLink>
       </li>
+      {user && (
+        <li>
+          <NavLink to={"/dashBoard"}>DashBoard</NavLink>
+        </li>
+      )}
       <li className="inline-block md:hidden">
         <NavLink to={"/beARider"}>Be A Rider?</NavLink>
       </li>

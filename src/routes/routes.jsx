@@ -8,6 +8,8 @@ import Register from "../pages/Auth/Register/Register";
 import BeARider from "../pages/BeARider/BeARider";
 import PrivetRoutes from "./PrivetRoutes";
 import SendParcel from "../pages/SendParcel/SendParcel";
+import DashBoardHome from "../pages/DashBoard/DashBoardHome/DashBoardHome";
+import DashBoardLayout from "../RootLayout/DashBoardLayout";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +37,20 @@ export const router = createBrowserRouter([
         path: "/coverage",
         Component: Coverage,
         loader: () => fetch("/serviceJone.json").then((res) => res.json()),
+      },
+    ],
+  },
+  {
+    path: "dashBoard",
+    element: (
+      <PrivetRoutes>
+        <DashBoardLayout></DashBoardLayout>
+      </PrivetRoutes>
+    ),
+    children: [
+      {
+        index: true,
+        Component: DashBoardHome,
       },
     ],
   },

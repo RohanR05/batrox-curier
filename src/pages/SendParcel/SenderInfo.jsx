@@ -7,7 +7,7 @@ import {
   FaHome,
 } from "react-icons/fa";
 
-const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
+const SenderInfo = ({ register, errors, serviceArea, senderRegion, user }) => {
   const duplicateRegion = serviceArea.map((c) => c.region);
   const regions = [...new Set(duplicateRegion)];
 
@@ -38,6 +38,7 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
                 type="text"
                 className="grow"
                 placeholder="Enter sender name"
+                defaultValue={user?.displayName}
                 {...register("senderName", {
                   required: "Sender name is required",
                 })}
@@ -53,7 +54,7 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
 
           {/* Sender Contact */}
           <div>
-            <label className="label font-medium">Sender Contact</label>
+            <label className="label font-medium">Sender Email</label>
 
             <label className="input input-bordered flex items-center gap-2 w-full">
               <FaPhoneAlt className="text-secondary" />
@@ -61,15 +62,16 @@ const SenderInfo = ({ register, errors, serviceArea, senderRegion }) => {
                 type="text"
                 className="grow"
                 placeholder="Enter sender contact"
-                {...register("senderContect", {
-                  required: "Sender Contact is required",
+                defaultValue={user?.email}
+                {...register("senderEmail", {
+                  required: "Sender Email is required",
                 })}
               />
             </label>
 
-            {errors.senderContect && (
+            {errors.senderEmail && (
               <p className="text-error text-sm mt-1">
-                {errors.senderContect.message}
+                {errors.senderEmail.message}
               </p>
             )}
           </div>
