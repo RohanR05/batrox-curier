@@ -1,7 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -13,10 +13,11 @@ const MyParcels = () => {
       return res.data;
     },
   });
+
   return (
     <div>
-      <h2>My Parcels</h2>
-      <p>Parcels Length: {parcels.length}</p>
+      <h2>Welcome to my parcels page</h2>
+      <p>{parcels.length}</p>
     </div>
   );
 };
