@@ -17,7 +17,32 @@ const MyParcels = () => {
   return (
     <div>
       <h2>Welcome to my parcels page</h2>
-      <p>{parcels.length}</p>
+      <div className="overflow-x-auto">
+        <table className="table table-zebra">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Parcel Title</th>
+              <th>Parcel Cost</th>
+              <th>Payment Status</th>
+              <th>Payment Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            {parcels.map((parcel, index) => (
+              <tr key={index}>
+                <th>{index + 1}</th>
+                <th>{parcel.parcelTitle}</th>
+                <th>{parcel.cost}</th>
+                <th>Working</th>
+                <th>Working</th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
