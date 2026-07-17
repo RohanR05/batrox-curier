@@ -53,6 +53,7 @@ const SendParcel = () => {
         cost = minCharge + extraCharge;
       }
     }
+    data.cost = cost;
     Swal.fire({
       title: `Your total payment is ${cost} taka.`,
       text: "You won't be able to revert this!",
@@ -72,8 +73,6 @@ const SendParcel = () => {
         icon: "success",
       });
     });
-    console.log(cost);
-    console.log(data);
   };
 
   return (

@@ -51,25 +51,25 @@ const ReceiverInfo = ({ register, errors, receiverRegion, serviceArea }) => {
             )}
           </div>
 
-          {/* Receiver Contact */}
+          {/* Receiver Email */}
           <div>
-            <label className="label font-medium">Receiver Contact</label>
+            <label className="label font-medium">Receiver Email</label>
 
             <label className="input input-bordered flex items-center gap-2 w-full">
               <FaPhoneAlt className="text-secondary" />
               <input
                 type="text"
                 className="grow"
-                placeholder="Enter receiver contact"
-                {...register("receiverContect", {
-                  required: "Receiver Contact is required",
+                placeholder="Enter receiver Email"
+                {...register("receiverEmail", {
+                  required: "Receiver Email is required",
                 })}
               />
             </label>
 
-            {errors.receiverContect && (
+            {errors.receiverEmail && (
               <p className="text-error text-sm mt-1">
-                {errors.receiverContect.message}
+                {errors.receiverEmail.message}
               </p>
             )}
           </div>
