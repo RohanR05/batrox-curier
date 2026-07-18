@@ -5,17 +5,43 @@ import { useQuery } from "@tanstack/react-query";
 import { TbListDetailsFilled } from "react-icons/tb";
 import { MdAutoDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: parcels = [] } = useQuery({
+  const { data: parcels = [], refetch } = useQuery({
     queryKey: ["myParcels", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels?email=${user.email}`);
       return res.data;
     },
   });
+
+  const handleMyParcelsDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed)
+        axiosSecure.delete(`/parcels/${id}`).then((res) => {
+          console.log(res.data);
+          if (res.data.deletedCount) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your parcel has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+    });
+  };
 
   return (
     <div>
@@ -40,7 +66,7 @@ const MyParcels = () => {
                 <th>{parcel.parcelTitle}</th>
                 <th>{parcel.cost}</th>
                 <th>Working</th>
-                <th>
+                <th className="">
                   <div className=" space-x-2">
                     <button className="btn btn-square text-secondary hover:bg-secondary hover:text-white">
                       <FaEdit />
@@ -48,7 +74,10 @@ const MyParcels = () => {
                     <button className="btn btn-square text-green-600 hover:text-white hover:bg-green-600">
                       <TbListDetailsFilled />
                     </button>
-                    <button className="btn btn-square text-red-600 hover:bg-red-600 hover:text-white">
+                    <button
+                      onClick={() => handleMyParcelsDelete(parcel._id)}
+                      className="btn btn-square text-red-600 hover:bg-red-600 hover:text-white"
+                    >
                       <MdAutoDelete />
                     </button>
                   </div>
