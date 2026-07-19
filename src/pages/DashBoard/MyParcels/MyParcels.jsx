@@ -6,6 +6,7 @@ import { TbListDetailsFilled } from "react-icons/tb";
 import { MdAutoDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { Link } from "react-router";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -50,11 +51,12 @@ const MyParcels = () => {
         <table className="table table-zebra">
           {/* head */}
           <thead>
-            <tr>
+            <tr className="text-secondary text-lg">
               <th>No.</th>
               <th>Parcel Title</th>
               <th>Parcel Cost</th>
               <th>Payment Status</th>
+              <th>Delivery Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -65,7 +67,19 @@ const MyParcels = () => {
                 <th>{index + 1}</th>
                 <th>{parcel.parcelTitle}</th>
                 <th>{parcel.cost}</th>
-                <th>Working</th>
+                <th>
+                  {parcel.paymentStatus === "paid" ? (
+                    <strong className="text-green-600">Paid</strong>
+                  ) : (
+                    <Link to={`/dashBoard/payment/${parcel._id}`}>
+                      {" "}
+                      <button className="btn btn-square text-secondary border border-secondary">
+                        Pay
+                      </button>
+                    </Link>
+                  )}
+                </th>
+                <th>Under Development</th>
                 <th className="">
                   <div className=" space-x-2">
                     <button className="btn btn-square text-secondary hover:bg-secondary hover:text-white">
