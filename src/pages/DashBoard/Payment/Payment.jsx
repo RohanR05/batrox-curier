@@ -1,11 +1,27 @@
-import React from 'react'
+import React from "react";
+import { useParams } from "react-router";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../../Components/Loading/Loading";
 
-const Payment = () => {
+const Payment = ({ children }) => {
+  const { parcelId } = useParams();
+  const axiosSecure = useAxiosSecure();
+  const { isLoading, data: parcel } = useQuery({
+    queryKey: ["parcels", parcelId],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/parcels/${parcelId}`);
+      return res.data;
+    },
+  });
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
   return (
-    <div>sdsf
-      
+    <div>
+      <p>{parcel.parcelTitle}</p>
     </div>
-  )
-}
+  );
+};
 
-export default Payment
+export default Payment;
