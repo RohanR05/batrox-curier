@@ -1,5 +1,5 @@
 import React from "react";
-import { FaBoxOpen } from "react-icons/fa";
+import { FaBoxOpen, FaGlobe, FaHome } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { NavLink, Outlet } from "react-router";
 
@@ -52,12 +52,12 @@ const DashBoardLayout = () => {
               {/* Home */}
               <li>
                 <NavLink
-                  to="/"
+                  to="/dashBoard"
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Homepage"
+                  data-tip="DashBoard Home"
                 >
                   <HiHome className="my-1.5 inline-block size-5" />
-                  <span className="is-drawer-close:hidden">Homepage</span>
+                  <span className="is-drawer-close:hidden">DashBoard Home</span>
                 </NavLink>
               </li>
               {/* my parcels */}
@@ -69,6 +69,17 @@ const DashBoardLayout = () => {
                 >
                   <FaBoxOpen className="my-1.5 inline-block size-4" />
                   <span className="is-drawer-close:hidden">My Parcels</span>
+                </NavLink>
+              </li>
+              {/* Home */}
+              <li>
+                <NavLink
+                  to="/" // or to="/" depending on your router setup
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Main Home"
+                >
+                  <FaGlobe className="my-1.5 inline-block size-4" />
+                  <span className="is-drawer-close:hidden">Main Home</span>
                 </NavLink>
               </li>
             </ul>
