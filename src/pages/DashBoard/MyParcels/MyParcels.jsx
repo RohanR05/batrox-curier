@@ -6,11 +6,13 @@ import { TbListDetailsFilled } from "react-icons/tb";
 import { MdAutoDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  
+  const { parcelId } = useParams();
   const { data: parcels = [], refetch } = useQuery({
     queryKey: ["myParcels", user?.email],
     queryFn: async () => {
@@ -18,6 +20,39 @@ const MyParcels = () => {
       return res.data;
     },
   });
+
+  const { isLoading, data: parcel } = useQuery({
+    queryKey: ["parcels", parcelId],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/parcels/${parcelId}`);
+      return res.data;
+    },
+  });
+
+  const handlePayment = async () => {
+    if (!parcel) return;
+
+    try {
+      const paymentInfo = {
+        cost: parcel.cost,
+        parcelId: parcel._id,
+        senderEmail: parcel.senderEmail,
+        parcelTitle: parcel.parcelTitle,
+      };
+
+      const res = await axiosSecure.post(
+        "/create-checkout-session",
+        paymentInfo,
+      );
+
+      // Redirect user to Stripe Checkout
+      if (res.data?.url) {
+        window.location.href = res.data.url;
+      }
+    } catch (error) {
+      console.error("Payment redirect failed:", error);
+    }
+  };
 
   const handleMyParcelsDelete = (id) => {
     Swal.fire({
@@ -71,12 +106,12 @@ const MyParcels = () => {
                   {parcel.paymentStatus === "paid" ? (
                     <strong className="text-green-600">Paid</strong>
                   ) : (
-                    <Link to={`/dashBoard/payment/${parcel._id}`}>
-                      {" "}
-                      <button className="btn btn-square text-secondary border border-secondary">
-                        Pay
-                      </button>
-                    </Link>
+                    <button
+                      onClick={handlePayment}
+                      className="btn btn-square text-secondary border border-secondary"
+                    >
+                      Pay
+                    </button>
                   )}
                 </th>
                 <th>Under Development</th>
