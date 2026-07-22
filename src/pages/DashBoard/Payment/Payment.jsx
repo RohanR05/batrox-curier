@@ -27,7 +27,10 @@ const Payment = () => {
         parcelTitle: parcel.parcelTitle,
       };
 
-      const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
+      const res = await axiosSecure.post(
+        "/create-checkout-session",
+        paymentInfo,
+      );
 
       // Redirect user to Stripe Checkout
       if (res.data?.url) {
@@ -45,7 +48,12 @@ const Payment = () => {
   if (!parcel) {
     return <p className="text-red-500">Parcel information not found.</p>;
   }
+  // 1. Guard clause: Handle missing data first
+  if (!parcel) {
+    return <p>No Data</p>;
+  }
 
+  // 2. Main render when parcel exists
   return (
     <div>
       <p>
