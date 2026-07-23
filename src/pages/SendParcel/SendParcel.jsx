@@ -4,7 +4,7 @@ import { FaBoxOpen } from "react-icons/fa";
 import ParcelInfo from "./ParcelInfo";
 import SenderInfo from "./SenderInfo";
 import ReceiverInfo from "./ReceiverInfo";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
@@ -13,6 +13,7 @@ const SendParcel = () => {
   const serviceArea = useLoaderData();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -61,12 +62,13 @@ const SendParcel = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, I agree!",
+      confirmButtonText: "Yes, I agree! Go To Payment",
     }).then((result) => {
       if (result.isConfirmed)
         axiosSecure.post("/parcels", data).then((res) => {
           console.log("after saving parcels data", res.data);
         });
+      navigate("/dashBoard/my-parcels");
       Swal.fire({
         title: "Confirmed!",
         text: "Your parcel has been confirmed.",
