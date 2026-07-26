@@ -37,9 +37,13 @@ const PaymentHistory = () => {
             Track and manage all your parcel delivery transactions.
           </p>
         </div>
-        <div className="stat text-secondary bg-secondary/10 rounded-xl w-auto py-2 px-6">
-          <div className="stat-title font-semibold">Total Transactions</div>
-          <div className="stat-value text-2xl">{payments.length}</div>
+        <div className="stat text-secondary bg-secondary rounded-xl w-auto py-2 px-6">
+          <div className="stat-title font-semibold text-primary">
+            Total Transactions
+          </div>
+          <div className=" text-white stat-value text-2xl">
+            {payments.length}
+          </div>
         </div>
       </div>
 
