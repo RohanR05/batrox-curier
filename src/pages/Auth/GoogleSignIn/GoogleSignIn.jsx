@@ -2,38 +2,59 @@ import React from "react";
 import useAuth from "../../../Hooks/useAuth";
 import { useLocation, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const GoogleSignIn = () => {
   const { googleSignInUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const from = location.state?.pathname || "/";
-  console.log(from);
+  const axiosSecure = useAxiosSecure();
+  const from =
+    location.state?.from?.pathname || location.state?.pathname || "/";
 
-  const handleGoogleSignIn = () => {
-    googleSignInUser()
-      .then((res) => {
-        console.log(res.user);
-        Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          },
-        }).fire({
-          icon: "success",
-          title: "Signed in successfully",
-        });
-        navigate(from);
-      })
-      .catch((error) => {
-        console.log(error);
+  // Reusable Toast helper
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    },
+  });
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const res = await googleSignInUser();
+
+      const userInfo = {
+        email: res.user?.email,
+        name: res.user?.displayName,
+        photoURL: res.user?.photoURL,
+      };
+
+      // 1. Save user to database FIRST
+      await axiosSecure.post("/users", userInfo);
+
+      // 2. Show success toast
+      Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
       });
+
+      // 3. Navigate only AFTER database saving completes
+      navigate(from, { replace: true });
+    } catch (error) {
+      console.error(error);
+      Toast.fire({
+        icon: "error",
+        title: error.message || "Failed to sign in",
+      });
+    }
   };
+
   return (
     <div>
       <button
