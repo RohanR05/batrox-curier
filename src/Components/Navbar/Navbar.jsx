@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const location = useLocation();
+  console.log(user);
 
   const handleLogout = () => {
     logOut()
@@ -94,15 +95,53 @@ const Navbar = () => {
             </button>
           </NavLink>
           {user ? (
-            <button
-              onClick={handleLogout}
-              className="btn btn-outline text-md md:text-lg"
-            >
-              Logout
-            </button>
+            <div className="dropdown dropdown-end">
+              {/* 1. Clickable Avatar Trigger */}
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn btn-ghost btn-circle avatar border-2 border-primary hover:border-secondary transition-all"
+              >
+                <div className="w-10 rounded-full">
+                  <img
+                    alt="User Profile"
+                    src={
+                      user?.photoURL ||
+                      "https://i.ibb.co/mR4qB8X/user-placeholder.png"
+                    }
+                  />
+                </div>
+              </div>
+
+              {/* 2. Menu that pops up on click */}
+              <ul
+                tabIndex={0}
+                className="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow-xl bg-white text-secondary border-3  border-secondary rounded-box w-56"
+              >
+                {/* User Info Header */}
+                <li className="px-2 py-2 border-b border-primary/40 mb-2 pointer-events-none">
+                  <p className="font-semibold text-sm text-secondary truncate">
+                    Name: {user?.displayName || "User"}
+                  </p>
+                  <p className="text-xs text-secondary truncate">
+                    {user?.email}
+                  </p>
+                </li>
+
+                {/* Logout Button */}
+                <li>
+                  <button
+                    onClick={handleLogout}
+                    className="btn btn-sm bg-secondary text-white hover:bg-secondary/80 border-none w-full mt-1"
+                  >
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            </div>
           ) : (
-            <NavLink state={location} to={"/login"}>
-              <button className="btn btn-outline text-md md:text-lg">
+            <NavLink state={{ from: location }} to="/login">
+              <button className="btn bg-primary text-slate-900 hover:bg-primary/80 border-none font-semibold text-md md:text-lg">
                 Login
               </button>
             </NavLink>
