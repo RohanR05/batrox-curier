@@ -3,6 +3,7 @@ import { NavLink, useLocation } from "react-router";
 import Logo from "../Logo/Logo";
 import useAuth from "../../Hooks/useAuth";
 import { auth } from "../../firebase/firebase.init";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -11,8 +12,20 @@ const Navbar = () => {
   const handleLogout = () => {
     logOut()
       .then((result) => {
-        console.log(result);
-        alert("logout");
+        Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          },
+        }).fire({
+          icon: "info",
+          title: "Logged out successfully",
+        });
       })
       .catch((error) => {
         console.log(error);

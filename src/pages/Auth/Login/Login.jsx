@@ -10,7 +10,6 @@ const Login = () => {
   const { signInUser } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
   const {
     register,
     handleSubmit,
@@ -20,7 +19,6 @@ const Login = () => {
   const handleLoginForm = (data) => {
     signInUser(data.email, data.password)
       .then((res) => {
-        console.log(res);
         Swal.mixin({
           toast: true,
           position: "top-end",

@@ -6,6 +6,7 @@ import useAuth from "../../../Hooks/useAuth";
 import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
 import axios from "axios";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 const Register = () => {
   const { registerUser, updateUserProfile } = useAuth();
   const location = useLocation();
@@ -48,6 +49,20 @@ const Register = () => {
           };
           updateUserProfile(userProfile)
             .then((res) => {
+              Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                },
+              }).fire({
+                icon: "success",
+                title: "Registerd in successfully",
+              });
               navigate(location.state?.pathname || "/");
             })
             .catch((error) => {
