@@ -5,11 +5,12 @@ import { FaEnvelope, FaLock, FaUserPlus } from "react-icons/fa";
 import useAuth from "../../../Hooks/useAuth";
 import GoogleSignIn from "../GoogleSignIn/GoogleSignIn";
 import axios from "axios";
-
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 const Register = () => {
   const { registerUser, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,
@@ -22,22 +23,31 @@ const Register = () => {
 
     registerUser(data.email, data.password)
       .then((result) => {
-        console.log(result.user);
-
         const formData = new FormData();
         formData.append("image", profileImg);
         const image_api_url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_apikey}`;
 
         axios.post(image_api_url, formData).then((res) => {
-          console.log(res.data.data.url);
+          const photoURL = res.data.data.url;
+
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL: photoURL,
+          };
+
+          axiosSecure.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("user created in the database");
+            }
+          });
 
           const userProfile = {
             displayName: data.name,
-            photoURL: res.data.data.url,
+            photoURL: photoURL,
           };
           updateUserProfile(userProfile)
             .then((res) => {
-              console.log("update success");
               navigate(location.state?.pathname || "/");
             })
             .catch((error) => {
