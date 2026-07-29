@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 
 const PaymentSuccess = () => {
@@ -33,6 +33,11 @@ const PaymentSuccess = () => {
         <p>Transaction Id : {paymentInfo.transactionId}</p>
         <p>Tracking ID : {paymentInfo.trackingId}</p>
       </div>
+      <Link to={"/dashBoard/payment-history"}>
+        <button className="btn btn-secondary btn-outline">
+          Payment History
+        </button>
+      </Link>
     </div>
   );
 };
