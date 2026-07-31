@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const location = useLocation();
-  console.log(user);
 
   const handleLogout = () => {
     logOut()
