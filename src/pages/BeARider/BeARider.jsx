@@ -11,6 +11,8 @@ import {
 } from "react-icons/md";
 import { RiEBike2Fill } from "react-icons/ri";
 import { useLoaderData } from "react-router";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const BeARider = () => {
   const {
@@ -19,6 +21,7 @@ const BeARider = () => {
     watch,
     formState: { errors },
   } = useForm();
+  const axiosSecure = useAxiosSecure();
 
   const areaData = useLoaderData() ?? [];
 
@@ -40,6 +43,17 @@ const BeARider = () => {
 
   const handleRiderForm = (data) => {
     console.log(data);
+    axiosSecure.post("/riders", data).then((res) => {
+      if (res.data.insertedId) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Your Form has been submitted",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
 
   return (
