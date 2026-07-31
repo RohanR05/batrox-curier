@@ -6,15 +6,37 @@ import {
   MdAppRegistration,
   MdDriveFileRenameOutline,
   MdEmail,
+  MdLocationOn,
+  MdMap,
 } from "react-icons/md";
 import { RiEBike2Fill } from "react-icons/ri";
+import { useLoaderData } from "react-router";
 
 const BeARider = () => {
   const {
     handleSubmit,
     register,
+    watch,
     formState: { errors },
   } = useForm();
+
+  const areaData = useLoaderData() ?? [];
+
+  const riderRegion = watch("riderRegion");
+
+  const duplicateRegion = areaData.map((c) => c.region);
+  const regions = [...new Set(duplicateRegion)];
+  const districts = riderRegion
+    ? [
+        ...new Set(
+          areaData
+            .filter((c) => c.region === riderRegion)
+            .map((r) => r.district),
+        ),
+      ]
+    : [];
+
+  console.log({ regions, riderRegion, districts });
 
   const handleRiderForm = (data) => {
     console.log(data);
@@ -81,48 +103,66 @@ const BeARider = () => {
             {/* region */}
             <div>
               <label className="label font-semibold text-secondary">
-                Email
+                Region
               </label>
 
               <label className="input input-bordered flex items-center gap-3 w-full">
-                <MdEmail className="text-secondary text-xl" />
-                <input
-                  type="text"
-                  className="grow"
-                  placeholder="Enter your email"
-                  {...register("email", {
-                    required: "Email is required",
+                <MdLocationOn className="text-secondary text-xl shrink-0" />
+                <select
+                  className="grow bg-transparent focus:outline-none cursor-pointer"
+                  defaultValue=""
+                  {...register("riderRegion", {
+                    required: "Please select a pickup region",
                   })}
-                />
+                >
+                  <option value="" disabled>
+                    Select Pickup Region
+                  </option>
+
+                  {regions?.map((r, index) => (
+                    <option key={index} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
               </label>
 
-              {errors.email && (
+              {errors.riderRegion && (
                 <p className="text-error text-sm mt-1">
-                  {errors.email.message}
+                  {errors.riderRegion.message}
                 </p>
               )}
             </div>
             {/* district */}
             <div>
               <label className="label font-semibold text-secondary">
-                Email
+                District
               </label>
 
               <label className="input input-bordered flex items-center gap-3 w-full">
-                <MdEmail className="text-secondary text-xl" />
-                <input
-                  type="text"
-                  className="grow"
-                  placeholder="Enter your email"
-                  {...register("email", {
-                    required: "Email is required",
+                <MdMap className="text-secondary text-xl shrink-0" />
+                <select
+                  className="grow bg-transparent focus:outline-none cursor-pointer"
+                  defaultValue=""
+                  {...register("riderDistrict", {
+                    required: "Please select a district",
                   })}
-                />
+                >
+                  <option value="" disabled>
+                    Select Pickup District
+                  </option>
+
+                  {districts?.map((d, index) => (
+                    <option key={index} value={d}>
+                      {d}
+                    </option>
+                  ))}
+                </select>
               </label>
 
-              {errors.email && (
+              {errors.riderDistrict && (
                 <p className="text-error text-sm mt-1">
-                  {errors.email.message}
+                  {errors.riderDistrict.message}
                 </p>
               )}
             </div>
@@ -195,7 +235,9 @@ const BeARider = () => {
               </label>
 
               {errors.license && (
-                <p className="text-error text-sm mt-1">{errors.license.message}</p>
+                <p className="text-error text-sm mt-1">
+                  {errors.license.message}
+                </p>
               )}
             </div>{" "}
             {/* address */}

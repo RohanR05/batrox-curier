@@ -32,6 +32,7 @@ export const router = createBrowserRouter([
             <BeARider></BeARider>
           </PrivetRoutes>
         ),
+        loader: () => fetch("/serviceJone.json").then((res) => res.json()),
       },
       {
         path: "/send-Parcel",
