@@ -21,11 +21,18 @@ const Coverage = () => {
   };
   return (
     <div className="m-2 md:m-0">
-      <h2 className="text-2xl font-medium my-4">
+      <h2 className="text-4xl text-secondary font-bold my-4">
         We are available in 64 district
       </h2>
-      <form onSubmit={handleSearchInput} className="input mb-4">
-        <svg
+      <form onSubmit={handleSearchInput} className="mb-4">
+       
+        <input
+          type="search"
+          className="grow"
+          placeholder="Search"
+          name="search"
+          className="input"
+        /> <svg
           className="h-[1em] opacity-50"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -41,14 +48,7 @@ const Coverage = () => {
             <path d="m21 21-4.3-4.3"></path>
           </g>
         </svg>
-        <input
-          type="search"
-          className="grow"
-          placeholder="Search"
-          name="search"
-        />
-        <input type="submit"  className=""/>
-        <h1 className="text-3xl">hii</h1>
+        <input type="submit" className="bg-red-50" />
       </form>
       <div className="w-full h-[700px] border-3 border-secondary">
         <MapContainer
