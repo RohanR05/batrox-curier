@@ -24,31 +24,33 @@ const Coverage = () => {
       <h2 className="text-4xl text-secondary font-bold my-4">
         We are available in 64 district
       </h2>
-      <form onSubmit={handleSearchInput} className="mb-4">
-       
-        <input
-          type="search"
-          className="grow"
-          placeholder="Search"
-          name="search"
-          className="input"
-        /> <svg
-          className="h-[1em] opacity-50"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <g
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            strokeWidth="2.5"
-            fill="none"
-            stroke="currentColor"
-          >
-            <circle cx="11" cy="11" r="8"></circle>
-            <path d="m21 21-4.3-4.3"></path>
-          </g>
-        </svg>
-        <input type="submit" className="bg-red-50" />
+      <form onSubmit={handleSearchInput} className="mb-4 max-w-md">
+        <div className="join w-full">
+          <label className="input input-bordered join-item flex items-center gap-2 w-full focus-within:outline-rose-500">
+            <svg
+              className="h-4 w-4 opacity-60"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
+            </svg>
+            <input
+              type="search"
+              name="search"
+              className="grow"
+              placeholder="Search"
+            />
+          </label>
+          <button type="submit" className="btn btn-secondary text-white text-xl join-item">
+            Search
+          </button>
+        </div>
       </form>
       <div className="w-full h-[700px] border-3 border-secondary">
         <MapContainer
