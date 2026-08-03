@@ -28,7 +28,7 @@ const PaymentHistory = () => {
   return (
     <div className="p-1 md:p-3 max-w-7xl mx-auto">
       {/* Header Section */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-primary/20 p-4 md:p-6 rounded-2xl shadow-sm border border-base-200">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-primary p-4 md:p-6 rounded-2xl shadow-sm border border-secondary">
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2 text-base-content">
             <FaReceipt className="text-secondary" /> Payment History
@@ -48,7 +48,7 @@ const PaymentHistory = () => {
       </div>
 
       {/* Table Container */}
-      <div className="bg-primary/40 rounded-2xl shadow-sm border border-base-200 overflow-hidden">
+      <div className="bg-primary rounded-2xl shadow-sm border border-secondary overflow-hidden">
         {isLoading ? (
           <div className="flex justify-center items-center p-12">
             <span className="loading loading-spinner loading-lg text-primary"></span>
@@ -67,7 +67,7 @@ const PaymentHistory = () => {
           <div className="overflow-x-auto">
             <table className="table table-zebra w-full">
               {/* Table Head */}
-              <thead className="bg-base-200/50 text-base-content/70 uppercase text-xs">
+              <thead className="bg-secondary text-primary uppercase text-xs">
                 <tr>
                   <th>#</th>
                   <th>

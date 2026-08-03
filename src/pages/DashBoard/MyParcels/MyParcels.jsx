@@ -4,7 +4,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { TbListDetailsFilled } from "react-icons/tb";
 import { MdAutoDelete } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaGift } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Loading from "../../../Components/Loading/Loading";
 import { useSearchParams } from "react-router";
@@ -118,11 +118,29 @@ const MyParcels = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold my-4">Welcome to my parcels page</h2>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-primary p-4 md:p-6 rounded-2xl shadow-sm border border-secondary">
+        <div>
+          <h2 className="text-2xl font-bold flex items-center gap-2 text-base-content">
+            <FaGift className="text-secondary" />
+            My Parcels Info
+          </h2>
+          <p className="text-sm text-base-content/70 mt-1">
+            Pay and manage all your parcel delivery
+          </p>
+        </div>
+        <div className="stat text-secondary bg-secondary rounded-xl w-auto py-2 px-6">
+          <div className="stat-title font-semibold text-primary">
+            Total Transactions
+          </div>
+          <div className=" text-white stat-value text-2xl">
+            {parcels.length}
+          </div>
+        </div>
+      </div>
       <div className="overflow-x-auto">
-        <table className="table table-zebra w-full">
+        <table className="table table-zebra bg-secondary/15 w-full">
           <thead>
-            <tr className="text-secondary text-lg">
+            <tr className="text-primary bg-secondary text-lg">
               <th>No.</th>
               <th>Parcel Title</th>
               <th>Parcel Cost</th>
