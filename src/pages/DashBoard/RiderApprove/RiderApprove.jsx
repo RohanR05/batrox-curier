@@ -5,16 +5,33 @@ import { TbMotorbikeFilled } from "react-icons/tb";
 import { FaUserCheck } from "react-icons/fa";
 import { IoPersonRemoveSharp, IoRemoveSharp } from "react-icons/io5";
 import { FaTrashCan } from "react-icons/fa6";
+import Swal from "sweetalert2";
 
 const RiderApprove = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: riders = [] } = useQuery({
+  const { refetch, data: riders = [] } = useQuery({
     queryKey: ["riders", "pending"],
     queryFn: async () => {
       const res = await axiosSecure.get("/riders");
       return res.data;
     },
   });
+
+  const handleRiderApprovee = (id) => {
+    const updateInfo = { status: "approved" };
+    axiosSecure.patch(`/riders/${id}`, updateInfo).then((res) => {
+      if (res.data.modifiedCount) {
+        refetch();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "You approved the Rider",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
   return (
     <div>
       {" "}
@@ -55,9 +72,16 @@ const RiderApprove = () => {
                 <td>{rider.name}</td>
                 <td>{rider.email}</td>
                 <td>{rider.riderDistrict}</td>
-                <td>{rider.status}</td>
+                <td
+                  className={`${rider.status === "approved" ? "text-secondary" : "text-red-600"}`}
+                >
+                  {rider.status}
+                </td>
                 <td className="space-x-1">
-                  <button className="btn btn-sm btn-secondar btn-outline hover:bg-secondary">
+                  <button
+                    onClick={() => handleRiderApprovee(rider._id)}
+                    className="btn btn-sm btn-secondar btn-outline hover:bg-secondary"
+                  >
                     <FaUserCheck></FaUserCheck>
                   </button>
                   <button className="btn btn-secondar btn-outline btn-sm hover:bg-secondary">
