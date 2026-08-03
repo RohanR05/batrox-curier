@@ -47,12 +47,15 @@ const Coverage = () => {
               placeholder="Search"
             />
           </label>
-          <button type="submit" className="btn btn-secondary text-white text-xl join-item">
+          <button
+            type="submit"
+            className="btn btn-secondary text-white text-xl join-item"
+          >
             Search
           </button>
         </div>
       </form>
-      <div className="w-full h-[700px] border-3 border-secondary">
+      <div className="w-full h-[700px] border-[3px] border-secondary">
         <MapContainer
           className="rounded-2xl w-full h-full"
           center={position}
