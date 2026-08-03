@@ -17,20 +17,28 @@ const RiderApprove = () => {
     },
   });
 
-  const handleRiderApprovee = (id) => {
-    const updateInfo = { status: "approved" };
+  const updateRiderStatus = (id, status) => {
+    const updateInfo = { status: status };
     axiosSecure.patch(`/riders/${id}`, updateInfo).then((res) => {
       if (res.data.modifiedCount) {
         refetch();
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "You approved the Rider",
+          title: `Rider status is set to ${status}`,
           showConfirmButton: false,
           timer: 1500,
         });
       }
     });
+  };
+
+  const handleRiderApprovee = (id) => {
+    updateRiderStatus(id, "approved");
+  };
+
+  const handleRiderReject = (id) => {
+    updateRiderStatus(id, "rejected");
   };
   return (
     <div>
@@ -84,7 +92,10 @@ const RiderApprove = () => {
                   >
                     <FaUserCheck></FaUserCheck>
                   </button>
-                  <button className="btn btn-secondar btn-outline btn-sm hover:bg-secondary">
+                  <button
+                    onClick={() => handleRiderReject(rider._id)}
+                    className="btn btn-secondar btn-outline btn-sm hover:bg-secondary"
+                  >
                     <IoPersonRemoveSharp></IoPersonRemoveSharp>
                   </button>
                   <button className="btn btn-secondar btn-outline btn-sm hover:bg-secondary">
