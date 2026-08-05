@@ -1,5 +1,5 @@
 import React from "react";
-import { FaBoxOpen, FaGlobe, FaHome, FaReceipt } from "react-icons/fa";
+import { FaBoxOpen, FaGlobe, FaHome, FaReceipt, FaUsers } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { TbMotorbikeFilled } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router";
@@ -82,6 +82,19 @@ const DashBoardLayout = () => {
                   <FaReceipt className="my-1.5 inline-block size-4" />
                   <span className="is-drawer-close:hidden">
                     Payment History
+                  </span>
+                </NavLink>
+              </li>
+              {/* Rider approve */}
+              <li>
+                <NavLink
+                  to="user-management"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="User Management"
+                >
+                  <FaUsers className="my-1.5 inline-block size-4" />
+                  <span className="is-drawer-close:hidden">
+                    User Management
                   </span>
                 </NavLink>
               </li>
