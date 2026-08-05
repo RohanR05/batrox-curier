@@ -17,9 +17,9 @@ const RiderApprove = () => {
     },
   });
 
-  const updateRiderStatus = (id, status) => {
-    const updateInfo = { status: status };
-    axiosSecure.patch(`/riders/${id}`, updateInfo).then((res) => {
+  const updateRiderStatus = (rider, status) => {
+    const updateInfo = { status: status, email: rider.email };
+    axiosSecure.patch(`/riders/${rider._id}`, updateInfo).then((res) => {
       if (res.data.modifiedCount) {
         refetch();
         Swal.fire({
@@ -33,12 +33,12 @@ const RiderApprove = () => {
     });
   };
 
-  const handleRiderApprovee = (id) => {
-    updateRiderStatus(id, "approved");
+  const handleRiderApprovee = (rider) => {
+    updateRiderStatus(rider, "approved");
   };
 
-  const handleRiderReject = (id) => {
-    updateRiderStatus(id, "rejected");
+  const handleRiderReject = (rider) => {
+    updateRiderStatus(rider, "rejected");
   };
   return (
     <div>
@@ -87,13 +87,13 @@ const RiderApprove = () => {
                 </td>
                 <td className="space-x-1">
                   <button
-                    onClick={() => handleRiderApprovee(rider._id)}
+                    onClick={() => handleRiderApprovee(rider)}
                     className="btn btn-sm btn-secondar btn-outline hover:bg-secondary"
                   >
                     <FaUserCheck></FaUserCheck>
                   </button>
                   <button
-                    onClick={() => handleRiderReject(rider._id)}
+                    onClick={() => handleRiderReject(rider)}
                     className="btn btn-secondar btn-outline btn-sm hover:bg-secondary"
                   >
                     <IoPersonRemoveSharp></IoPersonRemoveSharp>

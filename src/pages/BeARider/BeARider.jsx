@@ -13,6 +13,7 @@ import { RiEBike2Fill } from "react-icons/ri";
 import { useLoaderData } from "react-router";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
 
 const BeARider = () => {
   const {
@@ -22,6 +23,8 @@ const BeARider = () => {
     formState: { errors },
   } = useForm();
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
+  console.log(user.email);
 
   const areaData = useLoaderData() ?? [];
 
@@ -38,8 +41,6 @@ const BeARider = () => {
         ),
       ]
     : [];
-
-  console.log({ regions, riderRegion, districts });
 
   const handleRiderForm = (data) => {
     console.log(data);
@@ -80,6 +81,7 @@ const BeARider = () => {
                   type="text"
                   className="grow"
                   placeholder="Enter your name"
+                  defaultValue={user.displayName}
                   {...register("name", {
                     required: "Name is required",
                   })}
@@ -102,6 +104,7 @@ const BeARider = () => {
                   type="text"
                   className="grow"
                   placeholder="Enter your email"
+                  defaultValue={user?.email}
                   {...register("email", {
                     required: "Email is required",
                   })}
