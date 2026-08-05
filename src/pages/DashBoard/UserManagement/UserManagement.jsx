@@ -34,7 +34,43 @@ const UserManagement = () => {
         </div>
       </div>
       {/* table */}
-      <p>{users.length}</p>
+      <div className="overflow-x-auto bg-primary text-secondary font-semibold border rounded-2xl">
+        <table className="table">
+          {/* head */}
+          <thead className="bg-secondary text-primary font-bold text-lg">
+            <tr>
+              <th>No</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Admin Action</th>
+              <th>Others Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user, index) => (
+              <tr key={index}>
+                <th>{index + 1}</th>
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle h-12 w-12">
+                        <img src={user?.photoURL || ""} />
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>{user.email}</td>
+                <td>
+                  <strong>{user.role}</strong>
+                </td>
+                <td>working</td>
+                <td>working</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
