@@ -3,8 +3,13 @@ import { FaBoxOpen, FaGlobe, FaHome, FaReceipt, FaUsers } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { TbMotorbikeFilled } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router";
+import UseRole from "../Hooks/UseRole";
+import useAuth from "../Hooks/useAuth";
 
 const DashBoardLayout = () => {
+  const { user } = useAuth();
+  const { role } = UseRole();
+  console.log(role);
   return (
     <div className="max-w-7xl mx-auto">
       <div className="drawer lg:drawer-open">
@@ -85,30 +90,36 @@ const DashBoardLayout = () => {
                   </span>
                 </NavLink>
               </li>
-              {/* Rider approve */}
-              <li>
-                <NavLink
-                  to="user-management"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="User Management"
-                >
-                  <FaUsers className="my-1.5 inline-block size-4" />
-                  <span className="is-drawer-close:hidden">
-                    User Management
-                  </span>
-                </NavLink>
-              </li>
-              {/* Rider approve */}
-              <li>
-                <NavLink
-                  to="rider-approve"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Rider Approve"
-                >
-                  <TbMotorbikeFilled className="my-1.5 inline-block size-4" />
-                  <span className="is-drawer-close:hidden">Rider Approve</span>
-                </NavLink>
-              </li>
+              {role === "admin" && (
+                <>
+                  {/* User Management */}
+                  <li>
+                    <NavLink
+                      to="user-management"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="User Management"
+                    >
+                      <FaUsers className="my-1.5 inline-block size-4" />
+                      <span className="is-drawer-close:hidden">
+                        User Management
+                      </span>
+                    </NavLink>
+                  </li>
+                  {/* Rider approve */}
+                  <li>
+                    <NavLink
+                      to="rider-approve"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Rider Approve"
+                    >
+                      <TbMotorbikeFilled className="my-1.5 inline-block size-4" />
+                      <span className="is-drawer-close:hidden">
+                        Rider Approve
+                      </span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
               {/* Home */}
               <li>
                 <NavLink
