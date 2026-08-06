@@ -3,16 +3,43 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { data } from "react-router";
 import { FaUsers } from "react-icons/fa";
+import { FaShield } from "react-icons/fa6";
+import { FiShieldOff } from "react-icons/fi";
+import Swal from "sweetalert2";
 
 const UserManagement = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: users = [] } = useQuery({
+  const { refetch, data: users = [] } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get("users");
       return res.data;
     },
   });
+
+  const updateUserRole = (user, role) => {
+    axiosSecure.patch(`/user/${user._id}`, { role }).then((res) => {
+      if (res.data.modifiedCount) {
+        refetch();
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: `${user.displayName} Role is set to ${role}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
+
+  const handleAdminRole = (user) => {
+    updateUserRole(user, "admin");
+  };
+
+  const handleRemoveAdmin = (user) => {
+    updateUserRole(user, "user");
+  };
+
   return (
     <div>
       {/* Head */}
@@ -64,7 +91,23 @@ const UserManagement = () => {
                 <td>
                   <strong>{user.role}</strong>
                 </td>
-                <td>working</td>
+                <td>
+                  {user.role === "admin" ? (
+                    <button
+                      onClick={() => handleRemoveAdmin(user)}
+                      className="btn bg-red-600 text-primary"
+                    >
+                      <FiShieldOff></FiShieldOff>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleAdminRole(user)}
+                      className="btn btn-secondary btn-outline"
+                    >
+                      <FaShield></FaShield>
+                    </button>
+                  )}
+                </td>
                 <td>working</td>
               </tr>
             ))}
