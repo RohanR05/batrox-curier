@@ -5,9 +5,10 @@ import { TbMotorbikeFilled } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router";
 import UseRole from "../Hooks/UseRole";
 import useAuth from "../Hooks/useAuth";
+import Loading from "../Components/Loading/Loading";
 
 const DashBoardLayout = () => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const { role } = UseRole();
   console.log(role);
   return (
@@ -42,7 +43,7 @@ const DashBoardLayout = () => {
           </nav>
           {/* Page content here */}
           <div className="p-4">
-            <Outlet></Outlet>
+            {loading ? <Loading></Loading> : <Outlet></Outlet>}
           </div>
         </div>
 
