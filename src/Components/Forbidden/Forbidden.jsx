@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { DotLottiePlayer } from "@dotlottie/react-player";
 import "@dotlottie/react-player/dist/index.css";
 import forbiddenAnimation from "../../assets/404Blink.json"; // Adjust path to assets as needed
@@ -8,7 +8,7 @@ const Forbidden = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-primary/20 p-6 text-center">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-primary/20 text-center">
       {/* Lottie Animation Wrapper */}
       <div className="w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
         <DotLottiePlayer
@@ -27,7 +27,8 @@ const Forbidden = () => {
         Access Forbidden
       </h1>
       <p className="text-sm text-gray-600 max-w-md mt-2 leading-relaxed">
-        You don’t have authorization to view this page. If you believe this is a mistake, contact your administrator.
+        You don’t have authorization to view this page. If you believe this is a
+        mistake, contact your administrator.
       </p>
 
       {/* Navigation Options */}
