@@ -9,7 +9,7 @@ import Loading from "../Components/Loading/Loading";
 
 const DashBoardLayout = () => {
   const { user, loading } = useAuth();
-  const { role } = UseRole();
+  const { role, isLoading } = UseRole();
   console.log(role);
   return (
     <div className="max-w-7xl mx-auto">

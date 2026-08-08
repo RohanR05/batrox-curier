@@ -7,7 +7,7 @@ const PrivetRoutes = ({ children }) => {
   const location = useLocation();
   const { user, loading } = useAuth();
   if (loading) {
-    return <Loading></Loading>;
+    return null;
   }
   if (!user) {
     return <Navigate state={location} to={"/login"}></Navigate>;
