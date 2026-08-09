@@ -98,7 +98,7 @@ const RiderApprove = () => {
                   >
                     <IoPersonRemoveSharp></IoPersonRemoveSharp>
                   </button>
-                  <button className="btn btn-secondar btn-outline btn-sm hover:bg-secondary">
+                  <button className="btn btn-accent btn-outline btn-sm hover:bg-secondary">
                     <FaTrashCan></FaTrashCan>
                   </button>
                 </td>

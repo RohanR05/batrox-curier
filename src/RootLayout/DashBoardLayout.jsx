@@ -10,7 +10,6 @@ import Loading from "../Components/Loading/Loading";
 const DashBoardLayout = () => {
   const { user, loading } = useAuth();
   const { role, isLoading } = UseRole();
-  console.log(role);
   return (
     <div className="max-w-7xl mx-auto">
       <div className="drawer lg:drawer-open">
