@@ -135,67 +135,81 @@ const MyParcels = () => {
           </div>
         </div>
       </div>
-      <div className="overflow-x-auto">
-        <table className="table table-zebra bg-secondary/15 w-full">
-          <thead>
-            <tr className="text-primary bg-secondary text-lg">
-              <th>No.</th>
-              <th>Parcel Title</th>
-              <th>Parcel Cost</th>
-              <th>Payment Status</th>
-              <th>Delivery Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {parcels.map((parcel, index) => {
-              // Standardizing casing check (supports both payment_status and paymentStatus)
-              const isPaid =
-                parcel.payment_status === "paid" ||
-                parcel.paymentStatus === "paid";
+      {/* table */}
 
-              return (
-                <tr key={parcel._id || index}>
-                  <td>{index + 1}</td>
-                  <td>{parcel.parcelTitle}</td>
-                  <td>{parcel.cost || "---"} TK</td>
-                  <td>
-                    {isPaid ? (
-                      <span className="badge badge-success text-white font-semibold">
-                        Paid
-                      </span>
-                    ) : (
-                      <button
-                        onClick={() => handlePayment(parcel)}
-                        className="btn btn-sm btn-secondary text-white"
-                      >
-                        Pay
-                      </button>
-                    )}
-                  </td>
-                  <td>{parcel.status || "Pending"}</td>
-                  <td>
-                    <div className="space-x-2 flex">
-                      <button className="btn btn-square btn-sm text-secondary hover:bg-secondary hover:text-white">
-                        <FaEdit />
-                      </button>
-                      <button className="btn btn-square btn-sm text-green-600 hover:text-white hover:bg-green-600">
-                        <TbListDetailsFilled />
-                      </button>
-                      <button
-                        onClick={() => handleMyParcelsDelete(parcel._id)}
-                        className="btn btn-square btn-sm text-red-600 hover:bg-red-600 hover:text-white"
-                      >
-                        <MdAutoDelete />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      {parcels.length === 0 ? (
+        <div className="text-center py-12 px-4">
+          <FaGift className="mx-auto text-4xl text-base-content/30 mb-3" />
+          <h3 className="text-lg font-semibold text-base-content/70">
+            No Parcels Records Found
+          </h3>
+          <p className="text-sm text-base-content/50">
+            Parcels you make will appear here automatically.
+          </p>
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table table-zebra bg-secondary/15 w-full">
+            <thead>
+              <tr className="text-primary bg-secondary text-lg">
+                <th>No.</th>
+                <th>Parcel Title</th>
+                <th>Parcel Cost</th>
+                <th>Payment Status</th>
+                <th>Delivery Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {parcels.map((parcel, index) => {
+                // Standardizing casing check (supports both payment_status and paymentStatus)
+                const isPaid =
+                  parcel.payment_status === "paid" ||
+                  parcel.paymentStatus === "paid";
+
+                return (
+                  <tr key={parcel._id || index}>
+                    <td>{index + 1}</td>
+                    <td>{parcel.parcelTitle}</td>
+                    <td>{parcel.cost || "---"} TK</td>
+                    <td>
+                      {isPaid ? (
+                        <span className="badge badge-success text-white font-semibold">
+                          Paid
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => handlePayment(parcel)}
+                          className="btn btn-sm btn-secondary text-white"
+                        >
+                          Pay
+                        </button>
+                      )}
+                    </td>
+                    <td>{parcel.status || "Pending"}</td>
+                    <td>
+                      <div className="space-x-2 flex">
+                        <button className="btn btn-square btn-sm text-secondary hover:bg-secondary hover:text-white">
+                          <FaEdit />
+                        </button>
+                        <button className="btn btn-square btn-sm text-green-600 hover:text-white hover:bg-green-600">
+                          <TbListDetailsFilled />
+                        </button>
+                        <button
+                          onClick={() => handleMyParcelsDelete(parcel._id)}
+                          className="btn btn-square btn-sm text-red-600 hover:bg-red-600 hover:text-white"
+                        >
+                          <MdAutoDelete />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

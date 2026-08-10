@@ -38,7 +38,17 @@ const DashBoardLayout = () => {
                 <path d="M14 10l2 2l-2 2"></path>
               </svg>
             </label>
-            <div className="px-4">BatRox Courier DashBoard</div>
+            <div className="w-full flex items-center">
+              <div className="px-4 flex-1">BatRox Courier DashBoard</div>
+              <NavLink
+                to="/" // or to="/" depending on your router setup
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex items-center gap-1 btn btn-primary text-secondary"
+                data-tip="Main Home"
+              >
+                <FaGlobe className="my-1.5 inline-block size-4" />
+                <span className="is-drawer-close:hidden">Main</span>
+              </NavLink>
+            </div>
           </nav>
           {/* Page content here */}
           <div className="p-4">
@@ -120,17 +130,6 @@ const DashBoardLayout = () => {
                   </li>
                 </>
               )}
-              {/* Home */}
-              <li>
-                <NavLink
-                  to="/" // or to="/" depending on your router setup
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Main Home"
-                >
-                  <FaGlobe className="my-1.5 inline-block size-4" />
-                  <span className="is-drawer-close:hidden">Main Home</span>
-                </NavLink>
-              </li>
             </ul>
           </div>
         </div>

@@ -85,7 +85,7 @@ const RiderApprove = () => {
                 >
                   {rider.status}
                 </td>
-                <td className="space-x-1">
+                <td className="space-x-1 space-y-1">
                   <button
                     onClick={() => handleRiderApprovee(rider)}
                     className="btn btn-sm btn-secondar btn-outline hover:bg-secondary"
@@ -94,7 +94,7 @@ const RiderApprove = () => {
                   </button>
                   <button
                     onClick={() => handleRiderReject(rider)}
-                    className="btn btn-secondar btn-outline btn-sm hover:bg-secondary"
+                    className="btn btn-secondar btn-error btn-sm hover:bg-secondary"
                   >
                     <IoPersonRemoveSharp></IoPersonRemoveSharp>
                   </button>
