@@ -113,6 +113,9 @@ const MyParcels = () => {
       }
     });
   };
+  if(isLoading){
+    return <Loading></Loading>
+  }
 
   return (
     <div>

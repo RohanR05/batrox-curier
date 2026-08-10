@@ -11,6 +11,7 @@ import {
   FaBox,
 } from "react-icons/fa";
 import { MdOutlineAttachMoney } from "react-icons/md";
+import Loading from "../../../Components/Loading/Loading";
 
 const PaymentHistory = () => {
   const { user } = useAuth();
@@ -24,6 +25,10 @@ const PaymentHistory = () => {
       return res.data;
     },
   });
+
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div className="max-w-7xl mx-auto">

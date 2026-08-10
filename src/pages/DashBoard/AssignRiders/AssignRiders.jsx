@@ -1,6 +1,7 @@
 import React from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../../../Components/Loading/Loading";
 
 const AssignRiders = () => {
   const axiosSecure = useAxiosSecure();
@@ -14,7 +15,9 @@ const AssignRiders = () => {
       return res.data;
     },
   });
-
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
   return (
     <div>
       <h2>{parcels.length}</h2>
