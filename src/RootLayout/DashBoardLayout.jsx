@@ -6,6 +6,7 @@ import { NavLink, Outlet } from "react-router";
 import UseRole from "../Hooks/UseRole";
 import useAuth from "../Hooks/useAuth";
 import Loading from "../Components/Loading/Loading";
+import { MdOutlineAssignmentInd } from "react-icons/md";
 
 const DashBoardLayout = () => {
   const { user, loading } = useAuth();
@@ -98,6 +99,17 @@ const DashBoardLayout = () => {
                   <span className="is-drawer-close:hidden">
                     Payment History
                   </span>
+                </NavLink>
+              </li>
+              {/* assign Riders */}
+              <li>
+                <NavLink
+                  to="assign-riders"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Assign Riders"
+                >
+                  <MdOutlineAssignmentInd className="my-1.5 inline-block size-4" />
+                  <span className="is-drawer-close:hidden">Assign Riders</span>
                 </NavLink>
               </li>
               {role === "admin" && (

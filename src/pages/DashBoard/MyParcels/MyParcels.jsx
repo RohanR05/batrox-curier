@@ -149,7 +149,7 @@ const MyParcels = () => {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="table table-zebra bg-secondary/15 w-full">
+          <table className="table table-zebra bg-secondary/20 font-semibold w-full">
             <thead>
               <tr className="text-primary bg-secondary text-lg">
                 <th>No.</th>
@@ -186,7 +186,7 @@ const MyParcels = () => {
                         </button>
                       )}
                     </td>
-                    <td>{parcel.status || "Pending"}</td>
+                    <td>{parcel.parcelSatatus || "Not Find"}</td>
                     <td>
                       <div className="space-x-2 flex">
                         <button className="btn btn-square btn-sm text-secondary hover:bg-secondary hover:text-white">

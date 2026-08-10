@@ -26,7 +26,7 @@ const PaymentHistory = () => {
   });
 
   return (
-    <div className="p-1 md:p-3 max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-primary p-4 md:p-6 rounded-2xl shadow-sm border border-secondary">
         <div>
@@ -48,7 +48,7 @@ const PaymentHistory = () => {
       </div>
 
       {/* Table Container */}
-      <div className="bg-primary rounded-2xl shadow-sm border border-secondary overflow-hidden">
+      <div className="bg-secondary/20 overflow-hidden">
         {isLoading ? (
           <div className="flex justify-center items-center p-12">
             <span className="loading loading-spinner loading-lg text-primary"></span>
@@ -100,7 +100,7 @@ const PaymentHistory = () => {
               </thead>
 
               {/* Table Body */}
-              <tbody>
+              <tbody className="">
                 {payments.map((payment, index) => (
                   <tr key={payment._id || index} className="hover">
                     <td className="font-semibold text-base-content/60">
