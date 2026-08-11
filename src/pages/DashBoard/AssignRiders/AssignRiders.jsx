@@ -19,7 +19,6 @@ const AssignRiders = () => {
   if (isLoading) {
     return <Loading></Loading>;
   }
-  console.log(parcels);
   return (
     <div>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-primary p-4 md:p-6 rounded-2xl shadow-sm border border-secondary">

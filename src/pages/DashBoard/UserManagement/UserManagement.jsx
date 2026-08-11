@@ -92,8 +92,8 @@ const UserManagement = () => {
         </h2>
       </div>
       {/* table */}
-      <div className="overflow-x-auto bg-primary text-secondary font-semibold border rounded-2xl">
-        <table className="table">
+      <div className="overflow-x-auto font-semibold">
+        <table className="table table-zebra">
           {/* head */}
           <thead className="bg-secondary text-primary font-bold text-lg">
             <tr>
@@ -105,7 +105,7 @@ const UserManagement = () => {
               <th>Others Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-secondary/20">
             {users.map((user, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
@@ -118,9 +118,17 @@ const UserManagement = () => {
                     </div>
                   </div>
                 </td>
-                <td>{user.email}</td>
                 <td>
-                  <strong>{user.role}</strong>
+                  {" "}
+                  <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
+                    {user.email || "N/A"}
+                  </span>
+                </td>
+                <td>
+                  {" "}
+                  <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
+                    {user.role || "N/A"}
+                  </span>
                 </td>
                 <td>
                   {user.role === "admin" ? (

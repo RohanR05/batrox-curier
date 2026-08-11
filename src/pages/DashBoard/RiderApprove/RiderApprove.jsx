@@ -60,8 +60,8 @@ const RiderApprove = () => {
           <div className=" text-white stat-value text-2xl">{riders.length}</div>
         </div>
       </div>
-      <div className="overflow-x-auto rounded-box border border-secondary text-secondary font-bold bg-primary">
-        <table className="table">
+      <div className="overflow-x-auto font-semibold">
+        <table className="table table-zebra">
           {/* head */}
           <thead>
             <tr className="bg-secondary text-primary">
@@ -73,17 +73,33 @@ const RiderApprove = () => {
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-secondary/20">
             {riders.map((rider, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
-                <td>{rider.name}</td>
-                <td>{rider.email}</td>
+                <td>
+                  {" "}
+                  <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
+                    {rider.name || "N/A"}
+                  </span>
+                </td>
+                <td>
+                  {" "}
+                  <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
+                    {rider.email || "N/A"}
+                  </span>
+                </td>
                 <td>{rider.riderDistrict}</td>
-                <td
-                  className={`${rider.status === "approved" ? "text-secondary" : "text-red-600"}`}
-                >
-                  {rider.status}
+                <td>
+                  <span
+                    className={`inline-block font-mono text-xs font-semibold px-2.5 py-1 rounded-full capitalize ${
+                      rider.status === "approved"
+                        ? "bg-emerald-100 text-emerald-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {rider.status || "N/A"}
+                  </span>
                 </td>
                 <td className="space-x-1 space-y-1">
                   <button
@@ -94,11 +110,11 @@ const RiderApprove = () => {
                   </button>
                   <button
                     onClick={() => handleRiderReject(rider)}
-                    className="btn btn-secondar btn-error btn-sm hover:bg-secondary"
+                    className="btn btn-error btn-sm hover:btn-outline"
                   >
                     <IoPersonRemoveSharp></IoPersonRemoveSharp>
                   </button>
-                  <button className="btn btn-accent btn-outline btn-sm hover:bg-secondary">
+                  <button className="btn btn-accent btn-outline btn-sm hover:btn-primary">
                     <FaTrashCan></FaTrashCan>
                   </button>
                 </td>

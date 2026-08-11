@@ -112,36 +112,38 @@ const DashBoardLayout = () => {
                   <span className="is-drawer-close:hidden">Assign Riders</span>
                 </NavLink>
               </li>
-              {role === "admin" && (
-                <>
-                  {/* User Management */}
-                  <li>
-                    <NavLink
-                      to="user-management"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="User Management"
-                    >
-                      <FaUsers className="my-1.5 inline-block size-4" />
-                      <span className="is-drawer-close:hidden">
-                        User Management
-                      </span>
-                    </NavLink>
-                  </li>
-                  {/* Rider approve */}
-                  <li>
-                    <NavLink
-                      to="rider-approve"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="Rider Approve"
-                    >
-                      <TbMotorbikeFilled className="my-1.5 inline-block size-4" />
-                      <span className="is-drawer-close:hidden">
-                        Rider Approve
-                      </span>
-                    </NavLink>
-                  </li>
-                </>
-              )}
+              {role === "admin" ||
+                role === "user" ||
+                (role === "rider" && (
+                  <>
+                    {/* User Management */}
+                    <li>
+                      <NavLink
+                        to="user-management"
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="User Management"
+                      >
+                        <FaUsers className="my-1.5 inline-block size-4" />
+                        <span className="is-drawer-close:hidden">
+                          User Management
+                        </span>
+                      </NavLink>
+                    </li>
+                    {/* Rider approve */}
+                    <li>
+                      <NavLink
+                        to="rider-approve"
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="Rider Approve"
+                      >
+                        <TbMotorbikeFilled className="my-1.5 inline-block size-4" />
+                        <span className="is-drawer-close:hidden">
+                          Rider Approve
+                        </span>
+                      </NavLink>
+                    </li>
+                  </>
+                ))}
             </ul>
           </div>
         </div>
