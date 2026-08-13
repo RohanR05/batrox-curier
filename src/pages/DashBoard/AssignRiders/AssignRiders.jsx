@@ -94,7 +94,7 @@ const AssignRiders = () => {
       </div>
       <div>
         {/* Open the modal using document.getElementById('ID').showModal() method */}
-
+{/* modal */}
         <dialog ref={riderModal} id="riderModal" className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">Hello!</h3>
