@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Components/Loading/Loading";
@@ -6,6 +6,7 @@ import { MdOutlineAssignmentInd } from "react-icons/md";
 
 const AssignRiders = () => {
   const axiosSecure = useAxiosSecure();
+  const riderModal = useRef();
 
   const { data: parcels = [], isLoading } = useQuery({
     queryKey: ["parcels", "pending-pickup"],
@@ -19,6 +20,11 @@ const AssignRiders = () => {
   if (isLoading) {
     return <Loading></Loading>;
   }
+
+  const handleOpenRiderModal = (parcel) => {
+    riderModal.current.showModal();
+  };
+
   return (
     <div>
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-primary p-4 md:p-6 rounded-2xl shadow-sm border border-secondary">
@@ -74,7 +80,10 @@ const AssignRiders = () => {
                 </td>
                 <td>{parcel.senderArea}</td>
                 <td>
-                  <button className="btn btn-secondary btn-sm font-bold btn-outline">
+                  <button
+                    onClick={() => handleOpenRiderModal(parcel)}
+                    className="btn btn-secondary btn-sm font-bold btn-outline"
+                  >
                     Assign Rider
                   </button>
                 </td>
@@ -82,6 +91,19 @@ const AssignRiders = () => {
             ))}
           </tbody>
         </table>
+      </div>
+      <div>
+        {/* Open the modal using document.getElementById('ID').showModal() method */}
+
+        <dialog ref={riderModal} id="riderModal" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Hello!</h3>
+            <p className="py-4">Press ESC key or click outside to close</p>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
       </div>
     </div>
   );
