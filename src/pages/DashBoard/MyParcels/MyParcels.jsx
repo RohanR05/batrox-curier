@@ -113,8 +113,8 @@ const MyParcels = () => {
       }
     });
   };
-  if(isLoading){
-    return <Loading></Loading>
+  if (isLoading) {
+    return <Loading></Loading>;
   }
 
   return (
@@ -173,7 +173,11 @@ const MyParcels = () => {
                 return (
                   <tr key={parcel._id || index}>
                     <td>{index + 1}</td>
-                    <td>{parcel.parcelTitle}</td>
+                    <td>
+                      <span className="inline-block font-mono text-xs px-2.5 py-1 rounded-full text-secondary capitalize bg-primary/40 font-bold">
+                        {parcel.parcelTitle}
+                      </span>
+                    </td>
                     <td>{parcel.cost || "---"} TK</td>
                     <td>
                       {isPaid ? (
@@ -189,7 +193,12 @@ const MyParcels = () => {
                         </button>
                       )}
                     </td>
-                    <td>{parcel.parcelSatatus || "Not Find"}</td>
+                    <td>
+                      {" "}
+                      <span className="inline-block font-mono text-xs px-2.5 py-1 rounded-full bg-secondary text-white capitalize font-bold">
+                        {parcel.parcelSatatus || "Not Found"}
+                      </span>
+                    </td>
                     <td>
                       <div className="space-x-2 flex">
                         <button className="btn btn-square btn-sm text-secondary hover:bg-secondary hover:text-white">
