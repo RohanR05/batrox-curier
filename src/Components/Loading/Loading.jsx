@@ -5,7 +5,7 @@ import loadingAnimation from "../../assets/LoadingBouncingball.json";
 
 const Loading = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-primary/20">
+    <div className="min-h-screen flex flex-col items-center justify-center">
       <div className="w-28 h-28 flex items-center justify-center">
         <DotLottiePlayer
           src={loadingAnimation}
