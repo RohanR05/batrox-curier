@@ -1,7 +1,7 @@
 import React from "react";
 import { FaBoxOpen, FaGlobe, FaHome, FaReceipt, FaUsers } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
-import { TbMotorbikeFilled } from "react-icons/tb";
+import { TbMotorbikeFilled, TbTruckDelivery } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router";
 import UseRole from "../Hooks/UseRole";
 import useAuth from "../Hooks/useAuth";
@@ -138,6 +138,23 @@ const DashBoardLayout = () => {
                       <TbMotorbikeFilled className="my-1.5 inline-block size-4" />
                       <span className="is-drawer-close:hidden">
                         Rider Approve
+                      </span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {role === "rider" && (
+                <>
+                  {" "}
+                  <li>
+                    <NavLink
+                      to="assigned-parcels"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Assigned Parcels"
+                    >
+                      <TbTruckDelivery className="my-1.5 inline-block size-4" />
+                      <span className="is-drawer-close:hidden">
+                        Assigned Parcels
                       </span>
                     </NavLink>
                   </li>

@@ -19,6 +19,8 @@ import RiderApprove from "../pages/DashBoard/RiderApprove/RiderApprove";
 import UserManagement from "../pages/DashBoard/UserManagement/UserManagement";
 import AdminRoute from "./AdminRoute";
 import AssignRiders from "../pages/DashBoard/AssignRiders/AssignRiders";
+import RiderRoute from "./RiderRoute";
+import AssignedParcels from "../pages/DashBoard/AssignedParcels/AssignedParcels";
 
 export const router = createBrowserRouter([
   {
@@ -85,26 +87,36 @@ export const router = createBrowserRouter([
       },
       {
         path: "rider-approve",
-        // element: (
-        //   <AdminRoute>
-        //     <RiderApprove></RiderApprove>
-        //   </AdminRoute>
-        // ),
-        Component: RiderApprove,
+        element: (
+          <AdminRoute>
+            <RiderApprove></RiderApprove>
+          </AdminRoute>
+        ),
       },
       {
         path: "user-management",
-        // element: (
-        //   <AdminRoute>
-        //     <UserManagement></UserManagement>
-        //   </AdminRoute>
-        // ),
-        Component: UserManagement,
+        element: (
+          <AdminRoute>
+            <UserManagement></UserManagement>
+          </AdminRoute>
+        ),
       },
       ,
       {
         path: "assign-riders",
-        Component: AssignRiders,
+        element: (
+          <AdminRoute>
+            <AssignRiders></AssignRiders>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "assigned-parcels",
+        element: (
+          <RiderRoute>
+            <AssignedParcels></AssignedParcels>
+          </RiderRoute>
+        ),
       },
     ],
   },
