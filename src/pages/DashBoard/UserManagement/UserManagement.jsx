@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { data } from "react-router";
 import { FaUsers } from "react-icons/fa";
-import { FaShield } from "react-icons/fa6";
-import { FiShieldOff } from "react-icons/fi";
 import Swal from "sweetalert2";
 
 const UserManagement = () => {
   const axiosSecure = useAxiosSecure();
   const [searchText, setSearchText] = useState("");
+
   const { refetch, data: users = [] } = useQuery({
     queryKey: ["users", searchText],
     queryFn: async () => {
@@ -18,32 +16,37 @@ const UserManagement = () => {
     },
   });
 
-  const updateUserRole = (user, role) => {
-    axiosSecure.patch(`/user/${user._id}`, { role }).then((res) => {
-      if (res.data.modifiedCount) {
-        refetch();
+  const updateUserRole = (user, newRole) => {
+    // Avoid API request if role hasn't changed
+    if (user.role === newRole) return;
+
+    axiosSecure
+      .patch(`/user/${user._id}/role`, { role: newRole })
+      .then((res) => {
+        if (res.data?.modifiedCount > 0) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${user.displayName || "User"}'s role updated to ${newRole}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to update role:", error);
         Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `${user.displayName} Role is set to ${role}`,
-          showConfirmButton: false,
-          timer: 1500,
+          icon: "error",
+          title: "Update Failed",
+          text: error.response?.data?.message || "Could not update user role.",
         });
-      }
-    });
-  };
-
-  const handleAdminRole = (user) => {
-    updateUserRole(user, "admin");
-  };
-
-  const handleRemoveAdmin = (user) => {
-    updateUserRole(user, "user");
+      });
   };
 
   return (
     <div>
-      {/* Head */}
+      {/* Header Banner */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-primary p-4 md:p-6 rounded-2xl shadow-sm border border-secondary">
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2 text-base-content">
@@ -51,21 +54,22 @@ const UserManagement = () => {
             User Management
           </h2>
           <p className="text-sm text-base-content/80 mt-1">
-            Track and manage all your User
+            Track and manage all registered platform users
           </p>
         </div>
         <div className="stat text-secondary bg-secondary rounded-xl w-auto py-2 px-6">
           <div className="stat-title font-semibold text-primary">
             Total Users
           </div>
-          <div className=" text-white stat-value text-2xl">{users.length}</div>
+          <div className="text-white stat-value text-2xl">{users.length}</div>
         </div>
       </div>
-      {/* search */}
-      <div className="mb-6 flex items-center gap-6 flex-wrap">
-        <label className="input">
+
+      {/* Search Bar */}
+      <div className="mb-6 flex items-center gap-4 flex-wrap">
+        <label className="input input-bordered flex items-center gap-2 max-w-xs">
           <svg
-            className="h-[1em] opacity-50"
+            className="h-4 w-4 opacity-50"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
           >
@@ -76,80 +80,147 @@ const UserManagement = () => {
               fill="none"
               stroke="currentColor"
             >
-              <circle cx="11" cy="11" r="8"></circle>
-              <path d="m21 21-4.3-4.3"></path>
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.3-4.3" />
             </g>
           </svg>
           <input
             onChange={(e) => setSearchText(e.target.value)}
             type="search"
-            required
-            placeholder="Search Name || Email"
+            placeholder="Search Name or Email"
+            className="grow"
           />
         </label>
-        <h2 className="bg-primary py-1.5 rounded-2xl px-2 font-semibold flex-1 border-2 border-secondary">
-          <strong>Search Result:</strong> {searchText}
-        </h2>
+        {searchText && (
+          <h2 className="bg-primary py-2 px-4 rounded-xl font-semibold border-2 border-secondary text-sm">
+            <strong>Search Filter:</strong> {searchText}
+          </h2>
+        )}
       </div>
-      {/* table */}
+
+      {/* Table Section */}
       <div className="overflow-x-auto font-semibold">
-        <table className="table table-zebra">
-          {/* head */}
-          <thead className="bg-secondary text-primary font-bold text-lg">
+        <table className="table table-zebra w-full">
+          {/* Table Head */}
+          <thead className="bg-secondary text-primary font-bold text-base">
             <tr>
-              <th>No</th>
-              <th>Name</th>
+              <th>#</th>
+              <th>User</th>
               <th>Email</th>
-              <th>Role</th>
-              <th>Admin Action</th>
-              <th>Others Actions</th>
+              <th>Current Role</th>
+              <th>Change Role</th>
+              <th>Status</th>
             </tr>
           </thead>
+
+          {/* Table Body */}
           <tbody className="bg-secondary/20">
-            {users.map((user, index) => (
-              <tr key={index}>
-                <th>{index + 1}</th>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img src={user?.photoURL || ""} />
+            {users.length > 0 ? (
+              users.map((user, index) => (
+                <tr key={user._id || index}>
+                  <th>{index + 1}</th>
+
+                  {/* User Profile */}
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-10 w-10 bg-base-200">
+                          <img
+                            src={
+                              user?.photoURL ||
+                              "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                            }
+                            alt={user?.displayName || "User Avatar"}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-bold">
+                          {user?.displayName || user?.name || "Unnamed User"}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </td>
-                <td>
-                  {" "}
-                  <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
-                    {user.email || "N/A"}
-                  </span>
-                </td>
-                <td>
-                  {" "}
-                  <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
-                    {user.role || "N/A"}
-                  </span>
-                </td>
-                <td>
-                  {user.role === "admin" ? (
-                    <button
-                      onClick={() => handleRemoveAdmin(user)}
-                      className="btn bg-red-600 text-primary"
+                  </td>
+
+                  {/* Email */}
+                  <td>
+                    <span className="font-mono text-sm bg-base-200 px-2.5 py-1 rounded-md text-base-content">
+                      {user.email || "N/A"}
+                    </span>
+                  </td>
+
+                  {/* Role Badge */}
+                  <td>
+                    <span
+                      className={`badge badge-sm font-bold capitalize px-3 py-2 text-white ${
+                        user.role === "admin"
+                          ? "badge-error"
+                          : user.role === "rider"
+                            ? "badge-secondary"
+                            : "badge-neutral"
+                      }`}
                     >
-                      <FiShieldOff></FiShieldOff>
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleAdminRole(user)}
-                      className="btn btn-secondary btn-outline"
-                    >
-                      <FaShield></FaShield>
-                    </button>
-                  )}
+                      {user.role || "user"}
+                    </span>
+                  </td>
+
+                  {/* Change Role Action Dropdown */}
+                  <td>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`inline-block w-2.5 h-2.5 rounded-full ${
+                          user.role === "admin"
+                            ? "bg-error"
+                            : user.role === "rider"
+                              ? "bg-warning"
+                              : "bg-success"
+                        }`}
+                      />
+                      <select
+                        value={user.role || "user"}
+                        onChange={(e) => updateUserRole(user, e.target.value)}
+                        className="select select-sm bg-secondary text-white border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/50 font-semibold capitalize cursor-pointer rounded-lg shadow-xs"
+                      >
+                        <option
+                          value="user"
+                          className="bg-base-100 text-base-content font-medium"
+                        >
+                          User
+                        </option>
+                        <option
+                          value="rider"
+                          className="bg-base-100 text-base-content font-medium"
+                        >
+                          Rider
+                        </option>
+                        <option
+                          value="admin"
+                          className="bg-base-100 text-base-content font-medium"
+                        >
+                          Admin
+                        </option>
+                      </select>
+                    </div>
+                  </td>
+
+                  {/* Status Indicator */}
+                  <td>
+                    <span className="badge badge-outline badge-success text-xs font-bold">
+                      Active
+                    </span>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="6"
+                  className="text-center py-6 text-base-content/60"
+                >
+                  No users found matching your search.
                 </td>
-                <td>working</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
