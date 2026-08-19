@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Components/Loading/Loading";
 import { MdOutlineAssignmentInd } from "react-icons/md";
 import Swal from "sweetalert2";
+import { FaReceipt } from "react-icons/fa";
 
 const AssignRiders = () => {
   const axiosSecure = useAxiosSecure();
@@ -108,45 +109,55 @@ const AssignRiders = () => {
 
       {/* Table */}
       <div className="overflow-x-auto border border-base-content/5 bg-base-200">
-        <table className="table table-zebra">
-          <thead className="bg-secondary text-primary font-bold">
-            <tr>
-              <th>No.</th>
-              <th>Name</th>
-              <th>Cost</th>
-              <th>Created At</th>
-              <th>Pickup District</th>
-              <th>Available Riders</th>
-            </tr>
-          </thead>
-          <tbody className="bg-secondary/20 font-semibold">
-            {parcels.map((parcel, index) => (
-              <tr key={parcel._id || index}>
-                <th>{index + 1}</th>
-                <td>
-                  <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
-                    {parcel.parcelTitle || "N/A"}
-                  </span>
-                </td>
-                <td>{parcel.cost}</td>
-                <td>
-                  <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
-                    {parcel.createdAt || "N/A"}
-                  </span>
-                </td>
-                <td>{parcel.senderArea}</td>
-                <td>
-                  <button
-                    onClick={() => handleOpenRiderModal(parcel)}
-                    className="btn btn-secondary btn-sm font-bold btn-outline"
-                  >
-                    Available Riders
-                  </button>
-                </td>
+        {parcels.length === 0 ? (
+          <div className="text-center py-12 px-4">
+            <FaReceipt className="mx-auto text-4xl text-base-content/30 mb-3" />
+            <h3 className="text-lg font-semibold text-base-content/70">
+              No Parcles have to assign
+            </h3>
+          </div>
+        ) : (
+          <table className="table table-zebra">
+            <thead className="bg-secondary text-primary font-bold">
+              <tr>
+                <th>No.</th>
+                <th>Name</th>
+                <th>Cost</th>
+                <th>Created At</th>
+                <th>Pickup District</th>
+                <th>Available Riders</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody className="bg-secondary/20 font-semibold">
+              {parcels.map((parcel, index) => (
+                <tr key={parcel._id || index}>
+                  <th>{index + 1}</th>
+                  <td>
+                    <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
+                      {parcel.parcelTitle || "N/A"}
+                    </span>
+                  </td>
+                  <td>{parcel.cost}</td>
+                  <td>
+                    <span className="font-mono bg-secondary/20 px-2 py-1 rounded text-black">
+                      {parcel.createdAt || "N/A"}
+                    </span>
+                  </td>
+                  <td>{parcel.senderArea}</td>
+                  <td>
+                    <button
+                      onClick={() => handleOpenRiderModal(parcel)}
+                      className="btn btn-secondary btn-sm font-bold btn-outline"
+                    >
+                      Available Riders
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
 
       {/* Modal */}
