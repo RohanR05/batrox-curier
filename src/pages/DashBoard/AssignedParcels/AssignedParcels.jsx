@@ -162,4 +162,8 @@ const AssignedParcels = () => {
   );
 };
 
+
+
+
+
 export default AssignedParcels;
