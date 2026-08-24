@@ -15,64 +15,71 @@ const AssignedParcels = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["riderParcels", user?.email, "rider-assigned"],
+    queryKey: ["riderParcels", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get("/parcels/rider", {
         params: {
           riderEmail: user?.email,
-          delivaryStatus: "rider-assigned",
         },
       });
       return res.data;
     },
-    enabled: !!user?.email, // Only fetch when user email is available
+    enabled: !!user?.email,
   });
 
-  const handleAcceptDelivery = (parcel) => {
-    const statusInfo = { parcelStatus: "rider_arriving" }; // Match your backend field name
-
+  // Reusable master status updater function
+  const updateParcelStatus = (
+    parcel,
+    newStatus,
+    successTitle,
+    icon = "success",
+  ) => {
     axiosSecure
-      .patch(`/parcels/${parcel._id}/status`, statusInfo)
+      .patch(`/parcels/${parcel._id}/status`, { parcelStatus: newStatus })
       .then((res) => {
-        // Check modifiedCount (standard MongoDB update response property)
         if (res.data.modifiedCount > 0) {
           refetch();
           Swal.fire({
             position: "top-end",
-            icon: "success",
-            title: `Delivery accepted successfully!`,
+            icon: icon,
+            title: successTitle,
             showConfirmButton: false,
             timer: 1500,
           });
         }
       })
-      .catch((error) => {
-        console.error("Error updating delivery status:", error);
-      });
+      .catch((error) =>
+        console.error(`Error updating status to ${newStatus}:`, error),
+      );
+  };
+
+  // Specific Action Handlers
+  const handleAcceptDelivery = (parcel) => {
+    updateParcelStatus(
+      parcel,
+      "rider_arriving",
+      "Delivery accepted successfully!",
+    );
   };
 
   const handleRejectDelivery = (parcel) => {
-    const statusInfo = { parcelStatus: "cancelled" }; // or "rejected" based on your backend logic
+    updateParcelStatus(parcel, "cancelled", "Delivery Rejected", "error");
+  };
 
-    axiosSecure
-      .patch(`/parcels/${parcel._id}/status`, statusInfo)
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          refetch();
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Delivery Rejected",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      })
-      .catch((error) => console.error("Error rejecting delivery:", error));
+  const handleUpdateStatus = (parcel, nextStatus) => {
+    const statusMessages = {
+      in_transit: "Marked as Picked Up!",
+      delivered: "Parcel Delivered Successfully!",
+    };
+    updateParcelStatus(
+      parcel,
+      nextStatus,
+      statusMessages[nextStatus] || "Status updated!",
+    );
   };
 
   if (isLoading) {
-    return <Loading></Loading>;
+    return <Loading />;
   }
 
   return (
@@ -81,7 +88,7 @@ const AssignedParcels = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-primary p-4 md:p-6 rounded-2xl shadow-sm border border-secondary">
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2 text-base-content">
-            <FaBoxesPacking className="text-secondary" /> Assgin Parcels
+            <FaBoxesPacking className="text-secondary" /> Assigned Parcels
           </h2>
           <p className="text-sm text-base-content/70 mt-1">
             Manage and track your assigned delivery parcels, view pickup
@@ -92,18 +99,17 @@ const AssignedParcels = () => {
           <div className="stat-title font-semibold text-primary">
             Total Assigned Parcels
           </div>
-          <div className=" text-white stat-value text-2xl">
-            {parcels.length}
-          </div>
+          <div className="text-white stat-value text-2xl">{parcels.length}</div>
         </div>
       </div>
-      {/* table */}
+
+      {/* Table Section */}
       <div className="overflow-x-auto">
         {parcels.length === 0 ? (
           <div className="text-center py-12 px-4">
             <FaBoxesPacking className="mx-auto text-4xl text-base-content/30 mb-3" />
             <h3 className="text-lg font-semibold text-base-content/70">
-              No Assgined Parcels Found
+              No Assigned Parcels Found
             </h3>
           </div>
         ) : (
@@ -164,9 +170,11 @@ const AssignedParcels = () => {
                       {parcel.cost} BDT ({parcel.weight} kg)
                     </div>
                   </td>
-                  {/* Action Buttons */}
+
+                  {/* Dynamic Action Buttons */}
                   <td className="flex items-center gap-2">
-                    {parcel.parcelStatus === "rider_assigned" ? (
+                    {/* Stage 1: Initial assignment decision */}
+                    {parcel.parcelStatus === "rider_assigned" && (
                       <>
                         <button
                           onClick={() => handleAcceptDelivery(parcel)}
@@ -203,9 +211,58 @@ const AssignedParcels = () => {
                           Reject
                         </button>
                       </>
-                    ) : (
-                      <span className="capitalize font-semibold text-gray-600">
-                        {parcel.parcelStatus?.replace("_", " ") || "N/A"}
+                    )}
+
+                    {/* Stage 2: Pickup progression */}
+                    {parcel.parcelStatus === "rider_arriving" && (
+                      <button
+                        onClick={() => handleUpdateStatus(parcel, "in_transit")}
+                        className="btn btn-sm bg-warning text-white hover:bg-warning/80 border-none font-bold gap-1 shadow-xs"
+                        title="Mark as Picked Up"
+                      >
+                        <svg
+                          className="w-4 h-4 fill-current"
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                          <path d="M3 4a1 1 0 00-1 1v10a1 1 0 001 1h1.05a2.5 2.5 0 014.9 0h4.1a2.5 2.5 0 014.9 0H17a1 1 0 001-1v-5l-3-4H3z" />
+                        </svg>
+                        Picked Up
+                      </button>
+                    )}
+
+                    {/* Stage 3: Delivery progression */}
+                    {parcel.parcelStatus === "in_transit" && (
+                      <button
+                        onClick={() => handleUpdateStatus(parcel, "delivered")}
+                        className="btn btn-sm bg-success text-white hover:bg-success/80 border-none font-bold gap-1 shadow-xs"
+                        title="Mark as Delivered"
+                      >
+                        <svg
+                          className="w-4 h-4 fill-current"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        Delivered
+                      </button>
+                    )}
+
+                    {/* Stage 4: Completed badge */}
+                    {parcel.parcelStatus === "delivered" && (
+                      <span className="badge badge-success text-white font-medium p-2">
+                        Completed
+                      </span>
+                    )}
+
+                    {/* Terminal status badge */}
+                    {parcel.parcelStatus === "cancelled" && (
+                      <span className="badge badge-error text-white font-medium p-2">
+                        Cancelled
                       </span>
                     )}
                   </td>
