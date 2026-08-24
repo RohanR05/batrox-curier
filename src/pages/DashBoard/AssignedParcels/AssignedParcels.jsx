@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import { FaBoxesPacking } from "react-icons/fa6";
 import Loading from "../../../Components/Loading/Loading";
+import Swal from "sweetalert2";
 
 const AssignedParcels = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,6 +27,49 @@ const AssignedParcels = () => {
     },
     enabled: !!user?.email, // Only fetch when user email is available
   });
+
+  const handleAcceptDelivery = (parcel) => {
+    const statusInfo = { parcelStatus: "rider_arriving" }; // Match your backend field name
+
+    axiosSecure
+      .patch(`/parcels/${parcel._id}/status`, statusInfo)
+      .then((res) => {
+        // Check modifiedCount (standard MongoDB update response property)
+        if (res.data.modifiedCount > 0) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `Delivery accepted successfully!`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating delivery status:", error);
+      });
+  };
+
+  const handleRejectDelivery = (parcel) => {
+    const statusInfo = { parcelStatus: "cancelled" }; // or "rejected" based on your backend logic
+
+    axiosSecure
+      .patch(`/parcels/${parcel._id}/status`, statusInfo)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Delivery Rejected",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => console.error("Error rejecting delivery:", error));
+  };
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -122,35 +166,48 @@ const AssignedParcels = () => {
                   </td>
                   {/* Action Buttons */}
                   <td className="flex items-center gap-2">
-                    {/* Accept Button */}
-                    <button
-                      className="btn btn-sm bg-success text-white hover:bg-success/80 border-none font-bold gap-1 shadow-xs"
-                      title="Accept Delivery"
-                    >
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      Accept
-                    </button>
-
-                    {/* Reject Button */}
-                    <button
-                      className="btn btn-sm bg-error text-white hover:bg-error/80 border-none font-bold gap-1 shadow-xs"
-                      title="Reject Delivery"
-                    >
-                      <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
-                        <path
-                          fillRule="evenodd"
-                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      Reject
-                    </button>
+                    {parcel.parcelStatus === "rider_assigned" ? (
+                      <>
+                        <button
+                          onClick={() => handleAcceptDelivery(parcel)}
+                          className="btn btn-sm bg-success text-white hover:bg-success/80 border-none font-bold gap-1 shadow-xs"
+                          title="Accept Delivery"
+                        >
+                          <svg
+                            className="w-4 h-4 fill-current"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          Accept
+                        </button>
+                        <button
+                          onClick={() => handleRejectDelivery(parcel)}
+                          className="btn btn-sm bg-error text-white hover:bg-error/80 border-none font-bold gap-1 shadow-xs"
+                          title="Reject Delivery"
+                        >
+                          <svg
+                            className="w-4 h-4 fill-current"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                          Reject
+                        </button>
+                      </>
+                    ) : (
+                      <span className="capitalize font-semibold text-gray-600">
+                        {parcel.parcelStatus?.replace("_", " ") || "N/A"}
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -161,9 +218,5 @@ const AssignedParcels = () => {
     </div>
   );
 };
-
-
-
-
 
 export default AssignedParcels;
