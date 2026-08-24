@@ -38,43 +38,63 @@ const SendParcel = () => {
   const handleSendParcelForm = (data) => {
     const isDocument = data.parcelType === "Document";
     const sameDistrict = data.senderArea === data.receiverArea;
-    const parcelWeight = Number(data.weight);
+    const parcelWeight = Number(data.weight) || 0;
 
     let cost = 0;
     if (isDocument) {
       cost = sameDistrict ? 60 : 80;
     } else {
+      const minCharge = sameDistrict ? 110 : 150;
       if (parcelWeight <= 3) {
-        cost = sameDistrict ? 110 : 150;
+        cost = minCharge;
       } else {
-        const minCharge = sameDistrict ? 110 : 150;
         const extraWeight = parcelWeight - 3;
-        const extraCharge = sameDistrict
-          ? extraWeight * 40
-          : extraWeight * 40 + 40;
+        // 40 taka per additional kg over 3kg
+        const extraCharge = extraWeight * 40;
         cost = minCharge + extraCharge;
       }
     }
-    data.cost = cost;
+
+    const payload = {
+      ...data,
+      cost,
+      parcelStatus: "requested", // Default status for new parcel
+      createdAt: new Date(),
+    };
+
     Swal.fire({
       title: `Your total payment is ${cost} taka.`,
-      text: "You won't be able to revert this!",
-      icon: "warning",
+      text: "Please confirm to proceed with booking.",
+      icon: "info",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, I agree! Go To Payment",
-    }).then((result) => {
-      if (result.isConfirmed)
-        axiosSecure.post("/parcels", data).then((res) => {
-          console.log("after saving parcels data", res.data);
-        });
-      navigate("/dashBoard/my-parcels");
-      Swal.fire({
-        title: "Confirmed!",
-        text: "Your parcel has been confirmed.",
-        icon: "success",
-      });
+      confirmButtonText: "Yes, Confirm & Proceed",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const res = await axiosSecure.post("/parcels", payload);
+
+          if (res.data.insertedId || res.data.acknowledged) {
+            Swal.fire({
+              title: "Confirmed!",
+              text: "Your parcel request has been placed successfully.",
+              icon: "success",
+              timer: 1500,
+              showConfirmButton: false,
+            });
+            navigate("/dashboard/my-parcels");
+          }
+        } catch (error) {
+          console.error("Error saving parcel:", error);
+          Swal.fire({
+            title: "Error!",
+            text:
+              error.response?.data?.message || "Failed to place parcel order.",
+            icon: "error",
+          });
+        }
+      }
     });
   };
 

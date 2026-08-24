@@ -196,7 +196,7 @@ const MyParcels = () => {
                     <td>
                       {" "}
                       <span className="inline-block font-mono text-xs px-2.5 py-1 rounded-full bg-secondary text-white capitalize font-bold">
-                        {parcel.parcelSatatus || "Not Found"}
+                        {parcel.parcelStatus || "Not Found"}
                       </span>
                     </td>
                     <td>
