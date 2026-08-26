@@ -1,5 +1,5 @@
 import React from "react";
-import { FaBoxOpen, FaGlobe, FaHome, FaReceipt, FaUsers } from "react-icons/fa";
+import { FaBoxOpen, FaCheckCircle, FaGlobe, FaHome, FaReceipt, FaUsers } from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { TbMotorbikeFilled, TbTruckDelivery } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router";
@@ -159,6 +159,18 @@ const DashBoardLayout = () => {
                       <TbTruckDelivery className="my-1.5 inline-block size-4" />
                       <span className="is-drawer-close:hidden">
                         Assigned Parcels
+                      </span>
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      to="completed-delivary"
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Completed Delivary"
+                    >
+                      <FaCheckCircle className="my-1.5 inline-block size-4" />
+                      <span className="is-drawer-close:hidden">
+                        Completed Delivary
                       </span>
                     </NavLink>
                   </li>

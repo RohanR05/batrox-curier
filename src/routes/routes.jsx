@@ -21,6 +21,7 @@ import AdminRoute from "./AdminRoute";
 import AssignRiders from "../pages/DashBoard/AssignRiders/AssignRiders";
 import RiderRoute from "./RiderRoute";
 import AssignedParcels from "../pages/DashBoard/AssignedParcels/AssignedParcels";
+import CompletedDelivary from "../pages/DashBoard/CompletedDelivary/CompletedDelivary";
 
 export const router = createBrowserRouter([
   {
@@ -115,6 +116,14 @@ export const router = createBrowserRouter([
         element: (
           <RiderRoute>
             <AssignedParcels></AssignedParcels>
+          </RiderRoute>
+        ),
+      },
+      {
+        path: "completed-delivary",
+        element: (
+          <RiderRoute>
+            <CompletedDelivary></CompletedDelivary>
           </RiderRoute>
         ),
       },
