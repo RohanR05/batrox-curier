@@ -1,9 +1,29 @@
-import React from "react";
 import { NavLink, useLocation } from "react-router";
+import Swal from "sweetalert2";
+import {
+  FaHome,
+  FaMapMarkedAlt,
+  FaBoxOpen,
+  FaTachometerAlt,
+  FaMotorcycle,
+} from "react-icons/fa";
 import Logo from "../Logo/Logo";
 import useAuth from "../../Hooks/useAuth";
-import { auth } from "../../firebase/firebase.init";
-import Swal from "sweetalert2";
+
+const baseLink =
+  "flex items-center gap-3 px-4 py-2 rounded-lg font-medium transition-all duration-200";
+
+// Desktop: sits on the dark (secondary) navbar
+const desktopLink = ({ isActive }) =>
+  `${baseLink} text-primary hover:bg-primary/20 ${
+    isActive ? "bg-primary/25 ring-2 ring-primary font-bold" : "opacity-80"
+  }`;
+
+// Mobile dropdown: sits on a light (base-100) background
+const mobileLink = ({ isActive }) =>
+  `${baseLink} text-secondary hover:bg-secondary/10 ${
+    isActive ? "bg-secondary/40 font-bold" : ""
+  }`;
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
@@ -11,7 +31,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logOut()
-      .then((result) => {
+      .then(() => {
         Swal.mixin({
           toast: true,
           position: "top-end",
@@ -32,30 +52,37 @@ const Navbar = () => {
       });
   };
 
-  const links = (
+  const renderLinks = (linkClass) => (
     <>
       <li>
-        <NavLink to={"/"}>Home</NavLink>
+        <NavLink to="/" end className={linkClass}>
+          <FaHome /> Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/coverage"}>Coverage</NavLink>
+        <NavLink to="/coverage" className={linkClass}>
+          <FaMapMarkedAlt /> Coverage
+        </NavLink>
       </li>
       <li>
-        <NavLink to={"/send-Parcel"}>Send Percel</NavLink>
+        <NavLink to="/send-Parcel" className={linkClass}>
+          <FaBoxOpen /> Send Parcel
+        </NavLink>
       </li>
       {user && (
         <li>
-          <NavLink to={"/dashBoard"}>DashBoard</NavLink>
+          <NavLink to="/dashBoard" className={linkClass}>
+            <FaTachometerAlt /> Dashboard
+          </NavLink>
         </li>
       )}
-      <li className="inline-block md:hidden">
-        <NavLink to={"/beARider"}>Be A Rider?</NavLink>
-      </li>
     </>
   );
+
   return (
     <div className="bg-secondary shadow-md fixed w-full z-10 top-0">
       <div className="navbar max-w-7xl mx-auto text-primary">
+        {/* Left: mobile menu + logo */}
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -66,36 +93,48 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {" "}
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
+                />
               </svg>
             </div>
             <ul
-              tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 text-secondary font-bold rounded-box z-1 mt-3 w-52 p-2 shadow"
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow gap-1"
             >
-              {links}
+              {renderLinks(mobileLink)}
+              <li className="md:hidden">
+                <NavLink to="/beARider" className={mobileLink}>
+                  <FaMotorcycle /> Be A Rider?
+                </NavLink>
+              </li>
             </ul>
           </div>
-          <Logo></Logo>
+          <Logo />
         </div>
+
+        {/* Center: desktop links */}
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
+          <ul className="menu menu-horizontal px-1 gap-1">
+            {renderLinks(desktopLink)}
+          </ul>
         </div>
+
+        {/* Right: rider button + auth */}
         <div className="navbar-end">
-          <NavLink to={"/beARider"}>
-            <button className="btn text-secondary hidden  md:inline-block mr-3 text-lg">
-              Be a Rider
-            </button>
+          <NavLink
+            to="/beARider"
+            className="btn text-secondary hidden md:inline-flex mr-3 text-lg"
+          >
+            <FaMotorcycle /> Be a Rider
           </NavLink>
+
           {user ? (
             <div className="dropdown dropdown-end">
-              {/* 1. Clickable Avatar Trigger */}
+              {/* Avatar trigger */}
               <div
                 tabIndex={0}
                 role="button"
@@ -112,12 +151,11 @@ const Navbar = () => {
                 </div>
               </div>
 
-              {/* 2. Menu that pops up on click */}
+              {/* Profile menu */}
               <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content mt-3 z-[1] p-3 shadow-xl bg-white text-secondary border-3  border-secondary rounded-box w-56"
+                className="menu menu-sm dropdown-content mt-3 z-10 p-3 shadow-xl bg-white text-secondary border-2 border-secondary rounded-box w-56"
               >
-                {/* User Info Header */}
                 <li className="px-2 py-2 border-b border-primary/40 mb-2 pointer-events-none">
                   <p className="font-semibold text-sm text-secondary truncate">
                     Name: {user?.displayName || "User"}
@@ -126,8 +164,6 @@ const Navbar = () => {
                     {user?.email}
                   </p>
                 </li>
-
-                {/* Logout Button */}
                 <li>
                   <button
                     onClick={handleLogout}
@@ -139,10 +175,12 @@ const Navbar = () => {
               </ul>
             </div>
           ) : (
-            <NavLink state={{ from: location }} to="/login">
-              <button className="btn bg-primary text-slate-900 hover:bg-primary/80 border-none font-semibold text-md md:text-lg">
-                Login
-              </button>
+            <NavLink
+              state={{ from: location }}
+              to="/login"
+              className="btn bg-primary text-slate-900 hover:bg-primary/80 border-none font-semibold text-md md:text-lg"
+            >
+              Login
             </NavLink>
           )}
         </div>
