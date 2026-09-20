@@ -1,5 +1,12 @@
 import React from "react";
-import { FaBoxOpen, FaCheckCircle, FaGlobe, FaHome, FaReceipt, FaUsers } from "react-icons/fa";
+import {
+  FaBoxOpen,
+  FaCheckCircle,
+  FaGlobe,
+  FaHome,
+  FaReceipt,
+  FaUsers,
+} from "react-icons/fa";
 import { HiHome } from "react-icons/hi";
 import { TbMotorbikeFilled, TbTruckDelivery } from "react-icons/tb";
 import { NavLink, Outlet } from "react-router";
@@ -71,7 +78,7 @@ const DashBoardLayout = () => {
               <li>
                 <NavLink
                   to="/dashBoard"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right "
                   data-tip="DashBoard Home"
                 >
                   <HiHome className="my-1.5 inline-block size-5" />
@@ -82,7 +89,11 @@ const DashBoardLayout = () => {
               <li>
                 <NavLink
                   to="my-parcels"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  className={({ isActive }) =>
+                    `is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                      isActive ? "text-primary bg-secondary" : ""
+                    }`
+                  }
                   data-tip="My Parcels"
                 >
                   <FaBoxOpen className="my-1.5 inline-block size-4" />
@@ -93,7 +104,11 @@ const DashBoardLayout = () => {
               <li>
                 <NavLink
                   to="payment-history"
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  className={({ isActive }) =>
+                    `is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                      isActive ? "text-primary bg-secondary" : ""
+                    }`
+                  }
                   data-tip="Payment History"
                 >
                   <FaReceipt className="my-1.5 inline-block size-4" />
@@ -110,7 +125,11 @@ const DashBoardLayout = () => {
                   <li>
                     <NavLink
                       to="assign-riders"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      className={({ isActive }) =>
+                        `is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                          isActive ? "text-primary bg-secondary" : ""
+                        }`
+                      }
                       data-tip="Assign Riders"
                     >
                       <MdOutlineAssignmentInd className="my-1.5 inline-block size-4" />
@@ -123,7 +142,11 @@ const DashBoardLayout = () => {
                   <li>
                     <NavLink
                       to="user-management"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      className={({ isActive }) =>
+                        `is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                          isActive ? "text-primary bg-secondary" : ""
+                        }`
+                      }
                       data-tip="User Management"
                     >
                       <FaUsers className="my-1.5 inline-block size-4" />
@@ -136,7 +159,11 @@ const DashBoardLayout = () => {
                   <li>
                     <NavLink
                       to="rider-approve"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      className={({ isActive }) =>
+                        `is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                          isActive ? "text-primary bg-secondary" : ""
+                        }`
+                      }
                       data-tip="Rider Approve"
                     >
                       <TbMotorbikeFilled className="my-1.5 inline-block size-4" />
@@ -150,10 +177,15 @@ const DashBoardLayout = () => {
               {role === "rider" && (
                 <>
                   {" "}
+                  {/* asssigned parcels */}
                   <li>
                     <NavLink
                       to="assigned-parcels"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      className={({ isActive }) =>
+                        `is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                          isActive ? "text-primary bg-secondary" : ""
+                        }`
+                      }
                       data-tip="Assigned Parcels"
                     >
                       <TbTruckDelivery className="my-1.5 inline-block size-4" />
@@ -162,10 +194,15 @@ const DashBoardLayout = () => {
                       </span>
                     </NavLink>
                   </li>
+                  {/* completed delivary */}
                   <li>
                     <NavLink
                       to="completed-delivary"
-                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      className={({ isActive }) =>
+                        `is-drawer-close:tooltip is-drawer-close:tooltip-right ${
+                          isActive ? "text-primary bg-secondary" : ""
+                        }`
+                      }
                       data-tip="Completed Delivary"
                     >
                       <FaCheckCircle className="my-1.5 inline-block size-4" />
