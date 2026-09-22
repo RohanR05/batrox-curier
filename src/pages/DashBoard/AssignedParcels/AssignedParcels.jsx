@@ -14,12 +14,15 @@ const AssignedParcels = () => {
     data: parcels = [],
     refetch,
     isLoading,
+    isError,
+    error,
   } = useQuery({
     queryKey: ["riderParcels", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get("/parcels/rider", {
         params: {
           riderEmail: user?.email,
+          riderId: user?.riderId,
         },
       });
       return res.data;
@@ -83,6 +86,19 @@ const AssignedParcels = () => {
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center py-12 px-4">
+        <p className="text-error font-semibold">
+          Failed to load parcels: {error?.message || "Something went wrong"}
+        </p>
+        <button className="btn btn-sm mt-3" onClick={() => refetch()}>
+          Retry
+        </button>
+      </div>
+    );
   }
 
   return (
