@@ -35,7 +35,10 @@ const AssignedParcels = () => {
     icon = "success",
   ) => {
     axiosSecure
-      .patch(`/parcels/${parcel._id}/status`, { parcelStatus: newStatus })
+      .patch(`/parcels/${parcel._id}/status`, {
+        parcelStatus: newStatus,
+        riderId: parcel.riderId,
+      })
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           refetch();
