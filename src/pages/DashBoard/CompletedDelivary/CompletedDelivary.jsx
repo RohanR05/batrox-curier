@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { MdLocalShipping } from "react-icons/md";
 import Loading from "../../../Components/Loading/Loading";
+import { FaBoxesPacking } from "react-icons/fa6";
 
 const CompletedDelivary = () => {
   const { user } = useAuth();
@@ -25,6 +26,14 @@ const CompletedDelivary = () => {
     },
     enabled: !!user.email,
   });
+
+  const calculatePayout = (parcel) => {
+    if (parcel.senderArea === parcel.receiverArea) {
+      return parcel.cost * 0.6;
+    } else {
+      return parcel.cost * 0.8;
+    }
+  };
 
   if (isLoading) {
     return <Loading></Loading>;
@@ -111,7 +120,7 @@ const CompletedDelivary = () => {
                     <div className="font-mono text-xs bg-base-200 px-2 py-0.5 rounded w-max text-base-content font-bold">
                       {parcel.trackingId}
                     </div>
-                    <div className="text-xs text-success font-bold mt-1">
+                    <div className="text-xs text-secondary font-bold mt-1">
                       {parcel.cost} BDT ({parcel.weight} kg)
                     </div>
                   </td>
@@ -119,7 +128,7 @@ const CompletedDelivary = () => {
                   {/* payout */}
                   <td>
                     <div className="font-mono text-xs bg-base-200 px-2 py-0.5 rounded w-max text-base-content font-bold">
-                      90
+                      {calculatePayout(parcel)}
                     </div>
                   </td>
 
