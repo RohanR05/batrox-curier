@@ -19,9 +19,7 @@ const AssignRiders = () => {
   } = useQuery({
     queryKey: ["parcels", "pending-pickup"],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        "/parcels?parcelStatus=pending-pickup",
-      );
+      const res = await axiosSecure.get("/parcels?parcelStatus=pending-pickup");
       return res.data;
     },
   });
@@ -48,6 +46,7 @@ const AssignRiders = () => {
       riderName: rider.name,
       riderEmail: rider.email,
       parcelId: selectedRiders._id,
+      trackingId: selectedRiders.trackingId,
     };
 
     axiosSecure
