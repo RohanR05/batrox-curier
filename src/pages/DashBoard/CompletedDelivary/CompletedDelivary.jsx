@@ -12,6 +12,8 @@ const CompletedDelivary = () => {
   const {
     data: parcels = [],
     isLoading,
+    isError,
+    error,
     refetch,
   } = useQuery({
     queryKey: ["parcels", user?.email, "delivered"],
@@ -24,7 +26,7 @@ const CompletedDelivary = () => {
       });
       return res.data;
     },
-    enabled: !!user.email,
+    enabled: !!user?.email,
   });
 
   const calculatePayout = (parcel) => {
@@ -37,6 +39,19 @@ const CompletedDelivary = () => {
 
   if (isLoading) {
     return <Loading></Loading>;
+  }
+
+  if (isError) {
+    return (
+      <div className="text-center py-12 px-4">
+        <p className="text-error font-semibold">
+          Failed to load: {error?.message}
+        </p>
+        <button className="btn btn-sm mt-3" onClick={() => refetch()}>
+          Retry
+        </button>
+      </div>
+    );
   }
   return (
     <div>
@@ -128,7 +143,7 @@ const CompletedDelivary = () => {
                   {/* payout */}
                   <td>
                     <div className="font-mono text-xs bg-base-200 px-2 py-0.5 rounded w-max text-base-content font-bold">
-                      {calculatePayout(parcel)}
+                      {calculatePayout(parcel).toFixed(2)} BDT
                     </div>
                   </td>
 
