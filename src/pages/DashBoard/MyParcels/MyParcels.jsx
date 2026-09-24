@@ -7,7 +7,7 @@ import { MdAutoDelete } from "react-icons/md";
 import { FaEdit, FaGift } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Loading from "../../../Components/Loading/Loading";
-import { useSearchParams } from "react-router";
+import { Link, useSearchParams } from "react-router";
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -155,10 +155,10 @@ const MyParcels = () => {
           <table className="table table-zebra bg-secondary/20 font-semibold w-full">
             <thead>
               <tr className="text-primary bg-secondary text-lg">
-                <th>No.</th>
-                <th>Parcel Title</th>
+                <th>No. & Parcel Title</th>
                 <th>Parcel Cost</th>
                 <th>Payment Status</th>
+                <th>TrackingID</th>
                 <th>Delivery Status</th>
                 <th>Action</th>
               </tr>
@@ -172,12 +172,16 @@ const MyParcels = () => {
 
                 return (
                   <tr key={parcel._id || index}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <span className="inline-block font-mono text-xs px-2.5 py-1 rounded-full text-secondary capitalize bg-primary/40 font-bold">
-                        {parcel.parcelTitle}
-                      </span>
-                    </td>
+                    <th>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold opacity-70">
+                          #{index + 1}
+                        </span>
+                        <span className="font-semibold bg-secondary/10 text-secondary px-2.5 py-1 rounded-md text-sm border border-secondary/20">
+                          {parcel.parcelTitle || "N/A"}
+                        </span>
+                      </div>
+                    </th>
                     <td>{parcel.cost || "---"} TK</td>
                     <td>
                       {isPaid ? (
@@ -192,6 +196,11 @@ const MyParcels = () => {
                           Pay
                         </button>
                       )}
+                    </td>
+                    <td>
+                      <Link to={`/trackings/${parcel.trackingId}`}>
+                        {parcel.trackingId}
+                      </Link>
                     </td>
                     <td>
                       {" "}

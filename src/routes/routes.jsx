@@ -22,6 +22,7 @@ import AssignRiders from "../pages/DashBoard/AssignRiders/AssignRiders";
 import RiderRoute from "./RiderRoute";
 import AssignedParcels from "../pages/DashBoard/AssignedParcels/AssignedParcels";
 import CompletedDelivary from "../pages/DashBoard/CompletedDelivary/CompletedDelivary";
+import TrackingParcel from "../pages/TrackingParcel/TrackingParcel";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
         path: "/coverage",
         Component: Coverage,
         loader: () => fetch("/serviceJone.json").then((res) => res.json()),
+      },
+      {
+        path: "/trackings/:trackingId",
+        element: <TrackingParcel />,
       },
     ],
   },
