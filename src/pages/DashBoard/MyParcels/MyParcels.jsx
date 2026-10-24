@@ -203,6 +203,8 @@ const MyParcels = () => {
                         {parcel.trackingId}
                       </Link>
                     </td>
+
+                    
                     <td>
                       {" "}
                       <span className="inline-block font-mono text-xs px-2.5 py-1 rounded-full bg-secondary text-white capitalize font-bold">
